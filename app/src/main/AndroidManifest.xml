@@ -15,10 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EstudianteGrupoActivity" />
-        <activity android:name=".EvaluacionMenuActivity" />
-        <activity android:name=".Detalle_EvaluacionMenuActivity" />
-        <activity android:name=".Local_EvaluacionMenuActivity"></activity>
+        <activity android:name=".EstudianteGrupoActivity"></activity>
     </application>
 
 </manifest>
