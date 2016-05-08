@@ -2,6 +2,7 @@ package sv.ues.fia.tarea1;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+//Hola papus
 
 public class PTGActivity extends AppCompatActivity {
 
@@ -10,4 +11,6 @@ public class PTGActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ptg);
     }
+
+
 }
