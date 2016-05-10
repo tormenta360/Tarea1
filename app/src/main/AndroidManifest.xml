@@ -15,7 +15,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EstudianteGrupoActivity"></activity>
+        <activity android:name=".EstudianteGrupoActivity" />
+        <activity android:name=".DetalleDocente" />
+        <activity android:name=".DetalleDocenteActualizar" />
+        <activity android:name=".DetalleDocenteEliminar" />
+        <activity android:name=".DetalleDocenteInsertar" />
+        <activity android:name=".DetalleDocenteMenu" />
+        <activity android:name=".Docente" />
+        <activity android:name=".DetalleDocenteConsultar" />
+        <activity android:name=".DocenteActualizar" />
+        <activity android:name=".DocenteEliminar" />
+        <activity android:name=".DocenteConsultar" />
+        <activity android:name=".DocenteInsertar" />
+        <activity android:name=".DocenteMenu"></activity>
     </application>
 
 </manifest>
