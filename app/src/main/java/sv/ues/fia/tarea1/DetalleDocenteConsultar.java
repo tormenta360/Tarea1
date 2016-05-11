@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 public class DetalleDocenteConsultar extends Activity {
 
+
     ControlBD helper;
     EditText editCodigo;
     EditText editCodigoGrupo;
