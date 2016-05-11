@@ -35,7 +35,9 @@ public class DocenteActualizar extends Activity {
         helper.abrir();
         String estado = helper.actualizar(docente);
         helper.cerrar();
+
         Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+
     }
     public void limpiarTexto(View v) {
         editCodigo.setText("");

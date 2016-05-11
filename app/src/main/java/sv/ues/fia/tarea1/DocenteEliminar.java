@@ -20,11 +20,14 @@ public class DocenteEliminar extends Activity {
     }
     public void eliminarDocente(View v){
         String regEliminadas;
-        Docente docente=new Docente();
-        docente.setCodigoDocente(editCodigo.getText().toString());
-        controlhelper.abrir();
-        regEliminadas=controlhelper.eliminar(docente);
-        controlhelper.cerrar();
-        Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+
+
+            Docente docente=new Docente();
+            docente.setCodigoDocente(editCodigo.getText().toString());
+            controlhelper.abrir();
+            regEliminadas=controlhelper.eliminar(docente);
+            controlhelper.cerrar();
+            Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+
     }
 }

@@ -26,6 +26,8 @@ public class DocenteConsultar extends Activity {
         editEscuela = (EditText) findViewById(R.id.editEscuela);
     }
     public void consultarDocente(View v) {
+
+
         helper.abrir();
         Docente docente = helper.consultarDocente(editCodigo.getText().toString());
         helper.cerrar();
@@ -36,6 +38,8 @@ public class DocenteConsultar extends Activity {
             editApellido.setText(docente.getApellidoDocente());
             editEscuela.setText(docente.getEscuela());
         }
+
+
     }
     public void limpiarTexto(View v){
         editCodigo.setText("");

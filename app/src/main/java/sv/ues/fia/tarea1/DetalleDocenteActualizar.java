@@ -29,7 +29,6 @@ public class DetalleDocenteActualizar extends Activity {
         editCodigo = (EditText) findViewById(R.id.editCodigo);
         editCodigoGrupo = (EditText) findViewById(R.id.editCodigoGrupo);
         editNombreDocente = (EditText) findViewById(R.id.editNombreDocente);
-        //editTipoRol = (EditText) findViewById(R.id.editTipoRol);
         spinnerl.setAdapter(adapter);
     }
     public void actualizarDetalleDocente(View v) {

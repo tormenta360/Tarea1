@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class DetalleDocenteInsertar extends Activity {
 
 
+
     ControlBD helper;
     EditText editCodigo;
     EditText editCodigoGrupo;
@@ -64,4 +65,5 @@ public class DetalleDocenteInsertar extends Activity {
 
         editNombre.setText("");
     }
+
 }
