@@ -27,7 +27,7 @@ public class DetalleDocenteActualizar extends Activity {
 
         DetalleDocente detalleDocente = new DetalleDocente();
         detalleDocente.setCodigoDocente(editCodigo.getText().toString());
-        detalleDocente.setCodigoGrupo(editCodigoGrupo.getText().toString());
+        detalleDocente.setCodigoGrupo(Integer.parseInt(editCodigoGrupo.getText().toString()));
         detalleDocente.setTipoRol(editTipoRol.getText().toString());
         detalleDocente.setNombreDocente(editNombreDocente.getText().toString());
         helper.abrir();

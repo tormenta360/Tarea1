@@ -34,7 +34,7 @@ public class DetalleDocenteConsultar extends Activity {
             Toast.makeText(this, "Docente con codigo " + editCodigo.getText().toString() + " no encontrado", Toast.LENGTH_LONG).show();
         else{
             editCodigo.setText(detalleDocente.getCodigoDocente());
-            editCodigoGrupo.setText(detalleDocente.getCodigoGrupo());
+            editCodigoGrupo.setText(String.valueOf(detalleDocente.getCodigoGrupo()));
             editTipoRol.setText(detalleDocente.getTipoRol());
             editnombreDocente.setText(detalleDocente.getNombreDocente());
         }

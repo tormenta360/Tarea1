@@ -30,7 +30,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Codigo"
+        android:text="Eliminar"
         android:id="@+id/btnEliminar"
         android:layout_below="@+id/editCodigo"
         android:layout_alignParentLeft="true"

@@ -6,7 +6,7 @@ import android.os.Bundle;
 public class DetalleDocente extends AppCompatActivity {
 
     private String codigoDocente;
-    private String codigoGrupo;
+    private int codigoGrupo;
     private String tipoRol;
     private String nombreDocente;
 
@@ -24,11 +24,11 @@ public class DetalleDocente extends AppCompatActivity {
         this.codigoDocente = codigoDocente;
     }
 
-    public String getCodigoGrupo() {
+    public int getCodigoGrupo() {
         return codigoGrupo;
     }
 
-    public void setCodigoGrupo(String codigoGrupo) {
+    public void setCodigoGrupo(int codigoGrupo) {
         this.codigoGrupo = codigoGrupo;
     }
 

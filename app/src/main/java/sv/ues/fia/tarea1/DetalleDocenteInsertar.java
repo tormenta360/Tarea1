@@ -42,7 +42,7 @@ public class DetalleDocenteInsertar extends Activity {
     public void insertarDetalleDocente(View v) {
         String regInsertados;
         String codigo=editCodigo.getText().toString();
-        String codigogrupo=editCodigoGrupo.getText().toString();
+        int codigogrupo=Integer.parseInt(editCodigoGrupo.getText().toString());
         String selec = spinnerl.getSelectedItem().toString();
 
 
