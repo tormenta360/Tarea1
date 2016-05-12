@@ -6,7 +6,7 @@ package sv.ues.fia.tarea1;
 public class Contact {
 
     String name ,email,uname,pass;
-    int id;
+    int id,rol;
 
     public void setName(String name)
     {
@@ -49,4 +49,11 @@ public class Contact {
         this.id = id;
     }
 
+    public int getRol() {
+        return rol;
+    }
+
+    public void setRol(int rol) {
+        this.rol = rol;
+    }
 }

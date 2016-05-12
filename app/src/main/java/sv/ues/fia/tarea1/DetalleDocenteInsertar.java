@@ -19,7 +19,7 @@ public class DetalleDocenteInsertar extends Activity {
     Spinner spinnerl;
     EditText editNombre;
 
-    final String[] datos = new String[]{"Jurado","Docente"};
+    //final String[] datos = new String[]{"Jurado","Docente"};
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +40,14 @@ public class DetalleDocenteInsertar extends Activity {
     public void insertarDetalleDocente(View v) {
         String regInsertados;
         String codigo=editCodigo.getText().toString();
-        int codigogrupo=Integer.parseInt(editCodigoGrupo.getText().toString());
+        String codigogrupo=editCodigoGrupo.getText().toString();
         String selec = spinnerl.getSelectedItem().toString();
         String nombre = editNombre.getText().toString();
 
 
         DetalleDocente detalledocente= new DetalleDocente();
         detalledocente.setCodigoDocente(codigo);
-        detalledocente.setCodigoGrupo(codigogrupo);
+        detalledocente.setCodigoGrupo(Integer.valueOf(codigogrupo));
         detalledocente.setTipoRol(selec);
         detalledocente.setNombreDocente(nombre);
         helper.abrir();

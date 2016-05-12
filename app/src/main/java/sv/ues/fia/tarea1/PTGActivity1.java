@@ -16,8 +16,11 @@ public class PTGActivity1 extends ListActivity {
 
 
     String[] menu={"Tabla Docente","Tabla DetalleDocente","LLenar Base de Datos"};
+
+
     String[] activities={"DocenteMenu","DetalleDocenteMenu"};
     ControlBD BDhelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

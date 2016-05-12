@@ -20,9 +20,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_UNAME = "uname";
     private static final String COLUMN_PASS = "pass";
+    private static final String COLUMN_ROL = "rol";
     SQLiteDatabase db;
-    private static final String TABLE_CREATE = "create table contacts (id integer primary key not null , " +
-            "name text not null , email text not null , uname text not null , pass text not null);";
+    private static final String TABLE_CREATE = "create table contacts (id integer primary key not null , " + "name text not null , email text not null , uname text not null , pass text not null, rol integer not null);";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EMAIL, c.getEmail());
         values.put(COLUMN_UNAME, c.getUname());
         values.put(COLUMN_PASS, c.getPass());
+        values.put(COLUMN_ROL,1);
 
         db.insert(TABLE_NAME, null, values);
         db.close();
@@ -95,6 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         final String[] email = {"walter.lemus@hotmail.com","carlos@hotmail.com","alberto@hotmail.com","hernan@hotmail.com"};
         final String[] uname = {"walter5lemus","carlos","alberto","hernan"};
         final String[] pass = {"walter92","Ch1q2","jA3f2","gD21d"};
+        final int[] rol = {2,1,1,2};
 
 
 
@@ -105,6 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contacts.setEmail(email[i]);
             contacts.setUname(uname[i]);
             contacts.setPass(pass[i]);
+            contacts.setRol(rol[i]);
             insertContact(contacts);
         }
 
