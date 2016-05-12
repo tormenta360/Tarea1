@@ -27,6 +27,8 @@ public class ControlBD {
 
     }
 
+
+
     public Docente consultarDocente(String codigo) {
         String[] id = {codigo};
 

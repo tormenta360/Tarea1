@@ -10,14 +10,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class PTGActivity extends AppCompatActivity {
-
-
+    Contact c;
     DatabaseHelper helper = new DatabaseHelper(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ptg);
-        helper.lleanarBD();
+        helper.llenarBD();
+
     }
 
 
@@ -48,6 +48,8 @@ public class PTGActivity extends AppCompatActivity {
                 {
                     Intent i = new Intent(this, PTGActivity1.class);
                     i.putExtra("Username",str);
+
+
                     startActivity(i);
                 }
                 else

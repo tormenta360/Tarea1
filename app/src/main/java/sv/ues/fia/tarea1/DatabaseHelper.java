@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PASS = "pass";
     private static final String COLUMN_ROL = "rol";
     SQLiteDatabase db;
-    private static final String TABLE_CREATE = "create table contacts (id integer primary key not null , " + "name text not null , email text not null , uname text not null , pass text not null, rol integer not null);";
+    private static final String TABLE_CREATE = "create table contacts (id integer primary key not null , " + "name text not null , email text not null , uname text not null , pass text not null, rol VARCHAR(1) not null);";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,6 +36,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.db = db;
     }
 
+    public String rol(String uname)
+    {
+        db = this.getReadableDatabase();
+        String query = "select rol from "+TABLE_NAME;
+        Cursor cursor = db.rawQuery(query , null);
+        String a, b;
+        b = "not found";
+        if(cursor.moveToFirst())
+        {
+            do{
+                a = cursor.getString(0);
+
+                if(a.equals(uname))
+                {
+                    b = cursor.getString(1);
+
+                    break;
+                }
+            }
+            while(cursor.moveToNext());
+        }
+
+        return b;
+    }
 
 
     public void insertContact(Contact c) {
@@ -51,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EMAIL, c.getEmail());
         values.put(COLUMN_UNAME, c.getUname());
         values.put(COLUMN_PASS, c.getPass());
-        values.put(COLUMN_ROL,1);
+        values.put(COLUMN_ROL,c.getRol());
 
         db.insert(TABLE_NAME, null, values);
         db.close();
@@ -82,6 +106,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String query = "DROP TABLE IF EXISTS "+TABLE_NAME;
@@ -89,14 +115,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public String lleanarBD(){
+    public String llenarBD(){
 
         final int[] id = {00,01,02,03};
         final String[] name = {"Walter","Carlos","Alberto","Hernan"};
         final String[] email = {"walter.lemus@hotmail.com","carlos@hotmail.com","alberto@hotmail.com","hernan@hotmail.com"};
         final String[] uname = {"walter5lemus","carlos","alberto","hernan"};
         final String[] pass = {"walter92","Ch1q2","jA3f2","gD21d"};
-        final int[] rol = {2,1,1,2};
+        final String[] rol = {"2","1","1","2"};
 
 
 

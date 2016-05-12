@@ -38,7 +38,7 @@ public class DetalleDocenteActualizar extends Activity {
         String nombre = editNombreDocente.getText().toString();
 
         if(codigo.equals("") || codigogrupo.equals("") || nombre.equals("")){
-            Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT).show();
         }else{
             DetalleDocente detalleDocente = new DetalleDocente();
             detalleDocente.setCodigoDocente(editCodigo.getText().toString());

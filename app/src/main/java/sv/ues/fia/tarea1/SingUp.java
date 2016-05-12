@@ -57,7 +57,7 @@ public class SingUp extends AppCompatActivity {
 
                     Toast pass = Toast.makeText(this, "Datos ingresados con exito", Toast.LENGTH_SHORT);
                     pass.show();
-                    Intent i = new Intent(this, PTGActivity1.class);
+                    Intent i = new Intent(this, PTGActivity.class);
                     startActivity(i);
                 }
 

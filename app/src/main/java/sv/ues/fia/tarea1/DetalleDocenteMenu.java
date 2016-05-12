@@ -3,11 +3,14 @@ package sv.ues.fia.tarea1;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class DetalleDocenteMenu extends ListActivity {
 
@@ -19,22 +22,28 @@ public class DetalleDocenteMenu extends ListActivity {
     String[] activities={"DetalleDocenteInsertar","DetalleDocenteEliminar","DetalleDocenteConsultar",
             "DetalleDocenteActualizar"};
 
-    Contact c;
+    Contact c = new Contact();
+    SQLiteDatabase db;
+    DatabaseHelper helper = new DatabaseHelper(this);
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu));
         //ListView listView = getListView();
+        String username = getIntent().getStringExtra("Username");
+        Toast.makeText(this,username,Toast.LENGTH_SHORT).show();
 
-        //if(c.getRol()==1){
-            /*ArrayAdapter<String> adapter = new
+       if(1==1){
+            ArrayAdapter<String> adapter = new
                     ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, menu1);
-            setListAdapter(adapter);*/
-        //}else {
+            setListAdapter(adapter);
+        }else {
             ArrayAdapter<String> adapter = new
                     ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
             setListAdapter(adapter);
-        //}
+
+        }
     }
     @Override
     protected void onListItemClick(ListView l,View v,int position,long id){

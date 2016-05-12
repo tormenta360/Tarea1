@@ -45,7 +45,7 @@ public class DetalleDocenteInsertar extends Activity {
         String nombre = editNombre.getText().toString();
 
         if(codigo.equals("") || codigogrupo.equals("") || selec.equals("")|| nombre.equals("")){
-            Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT).show();
         }else{
             DetalleDocente detalledocente= new DetalleDocente();
             detalledocente.setCodigoDocente(codigo);
