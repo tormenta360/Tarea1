@@ -33,15 +33,24 @@ public class DetalleDocenteActualizar extends Activity {
     }
     public void actualizarDetalleDocente(View v) {
 
-        DetalleDocente detalleDocente = new DetalleDocente();
-        detalleDocente.setCodigoDocente(editCodigo.getText().toString());
-        detalleDocente.setCodigoGrupo(Integer.valueOf(editCodigoGrupo.getText().toString()));
-        detalleDocente.setTipoRol(spinnerl.getSelectedItem().toString());
-        detalleDocente.setNombreDocente(editNombreDocente.getText().toString());
-        helper.abrir();
-        String estado = helper.actualizar(detalleDocente);
-        helper.cerrar();
-        Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+        String codigo = editCodigo.getText().toString();
+        String codigogrupo=editCodigoGrupo.getText().toString();
+        String nombre = editNombreDocente.getText().toString();
+
+        if(codigo.equals("") || codigogrupo.equals("") || nombre.equals("")){
+            Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT);
+        }else{
+            DetalleDocente detalleDocente = new DetalleDocente();
+            detalleDocente.setCodigoDocente(editCodigo.getText().toString());
+            detalleDocente.setCodigoGrupo(Integer.valueOf(editCodigoGrupo.getText().toString()));
+            detalleDocente.setTipoRol(spinnerl.getSelectedItem().toString());
+            detalleDocente.setNombreDocente(editNombreDocente.getText().toString());
+            helper.abrir();
+            String estado = helper.actualizar(detalleDocente);
+            helper.cerrar();
+            Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+        }
+
     }
     public void limpiarTexto(View v) {
         editCodigo.setText("");

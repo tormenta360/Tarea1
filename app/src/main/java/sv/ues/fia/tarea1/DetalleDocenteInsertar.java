@@ -44,19 +44,20 @@ public class DetalleDocenteInsertar extends Activity {
         String selec = spinnerl.getSelectedItem().toString();
         String nombre = editNombre.getText().toString();
 
+        if(codigo.equals("") || codigogrupo.equals("") || selec.equals("")|| nombre.equals("")){
+            Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT);
+        }else{
+            DetalleDocente detalledocente= new DetalleDocente();
+            detalledocente.setCodigoDocente(codigo);
+            detalledocente.setCodigoGrupo(Integer.valueOf(codigogrupo));
+            detalledocente.setTipoRol(selec);
+            detalledocente.setNombreDocente(nombre);
+            helper.abrir();
 
-        DetalleDocente detalledocente= new DetalleDocente();
-        detalledocente.setCodigoDocente(codigo);
-        detalledocente.setCodigoGrupo(Integer.valueOf(codigogrupo));
-        detalledocente.setTipoRol(selec);
-        detalledocente.setNombreDocente(nombre);
-        helper.abrir();
-
-        regInsertados=helper.insertar(detalledocente);
-        helper.cerrar();
-
-        Toast.makeText(this, regInsertados, Toast.LENGTH_LONG).show();
-
+            regInsertados=helper.insertar(detalledocente);
+            helper.cerrar();
+            Toast.makeText(this, regInsertados, Toast.LENGTH_LONG).show();
+        }
 
     }
     public void limpiarTexto(View v) {
