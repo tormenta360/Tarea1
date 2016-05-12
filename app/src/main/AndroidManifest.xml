@@ -27,7 +27,9 @@
         <activity android:name=".DocenteEliminar" />
         <activity android:name=".DocenteConsultar" />
         <activity android:name=".DocenteInsertar" />
-        <activity android:name=".DocenteMenu"></activity>
+        <activity android:name=".DocenteMenu" />
+        <activity android:name=".SingUp" />
+        <activity android:name=".PTGActivity1"></activity>
     </application>
 
 </manifest>
