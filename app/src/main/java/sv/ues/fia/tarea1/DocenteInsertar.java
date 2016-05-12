@@ -29,15 +29,20 @@ public class DocenteInsertar extends Activity {
         String apellido=editApellido.getText().toString();
         String escuela=editEscuela.getText().toString();
         String regInsertados;
-        Docente docente=new Docente();
-        docente.setCodigoDocente(codigo);
-        docente.setNombreDocente(nombre);
-        docente.setApellidoDocente(apellido);
-        docente.setEscuela(escuela);
-        helper.abrir();
-        regInsertados=helper.insertar(docente);
-        helper.cerrar();
-        Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+
+        if(codigo.equals("") || codigo.equals("") || nombre.equals("")|| apellido.equals("")|| escuela.equals("")){
+            Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT);
+        }else {
+            Docente docente = new Docente();
+            docente.setCodigoDocente(codigo);
+            docente.setNombreDocente(nombre);
+            docente.setApellidoDocente(apellido);
+            docente.setEscuela(escuela);
+            helper.abrir();
+            regInsertados = helper.insertar(docente);
+            helper.cerrar();
+            Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+        }
     }
     public void limpiarTexto(View v) {
         editCodigo.setText("");

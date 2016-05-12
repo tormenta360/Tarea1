@@ -27,11 +27,17 @@ public class DocenteActualizar extends Activity {
     }
     public void actualizarDocente(View v) {
 
+        String codigo = editCodigo.getText().toString();
+        String nombre = editNombre.getText().toString();
+        String apellido = editApellido.getText().toString();
+        String escuela = editEscuela.getText().toString();
+
+
         Docente docente = new Docente();
-        docente.setCodigoDocente(editCodigo.getText().toString());
-        docente.setNombreDocente(editNombre.getText().toString());
-        docente.setApellidoDocente(editApellido.getText().toString());
-        docente.setEscuela(editEscuela.getText().toString());
+        docente.setCodigoDocente(codigo);
+        docente.setNombreDocente(nombre);
+        docente.setApellidoDocente(apellido);
+        docente.setEscuela(escuela);
         helper.abrir();
         String estado = helper.actualizar(docente);
         helper.cerrar();
