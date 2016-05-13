@@ -16,10 +16,10 @@ public class PTGActivity1 extends ListActivity {
 
 
     String[] menu={"Tabla Docente","Tabla DetalleDocente","LLenar Base de Datos"};
-
-
     String[] activities={"DocenteMenu","DetalleDocenteMenu"};
     ControlBD BDhelper;
+
+
 
 
     @Override
@@ -27,6 +27,11 @@ public class PTGActivity1 extends ListActivity {
         super.onCreate(savedInstanceState);
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu));
         BDhelper=new ControlBD(this);
+
+        //Toast.makeText(PTGActivity1.this, username, Toast.LENGTH_SHORT).show();
+
+
+
     }
 
     @Override
@@ -37,6 +42,9 @@ public class PTGActivity1 extends ListActivity {
             try{
                 Class<?> clase=Class.forName("sv.ues.fia.tarea1."+nombreValue);
                 Intent inte = new Intent(this,clase);
+                String username = getIntent().getStringExtra("Username");
+
+                inte.putExtra("Username",username);
                 this.startActivity(inte);
             }catch(ClassNotFoundException e){
                 e.printStackTrace();
@@ -46,6 +54,7 @@ public class PTGActivity1 extends ListActivity {
             String tost=BDhelper.llenarBD();
             BDhelper.cerrar();
             Toast.makeText(this, tost, Toast.LENGTH_SHORT).show();
+
         }
     }
 

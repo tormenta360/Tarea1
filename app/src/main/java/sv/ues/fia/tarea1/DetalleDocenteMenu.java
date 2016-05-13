@@ -30,13 +30,13 @@ public class DetalleDocenteMenu extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu));
-        //ListView listView = getListView();
+
         String username = getIntent().getStringExtra("Username");
         Toast.makeText(this,username,Toast.LENGTH_SHORT).show();
 
-       if(1==1){
-            ArrayAdapter<String> adapter = new
-                    ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, menu1);
+       if(username.equals("walter5lemus")) {
+           ArrayAdapter<String> adapter = new
+                   ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu1);
             setListAdapter(adapter);
         }else {
             ArrayAdapter<String> adapter = new
