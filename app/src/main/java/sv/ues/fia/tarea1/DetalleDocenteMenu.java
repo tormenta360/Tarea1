@@ -17,14 +17,11 @@ public class DetalleDocenteMenu extends ListActivity {
     String[] menu={"Insertar Detalles de Docente","Eliminar Detalles de Docente","Consultar Detalles de Docente",
             "Actualizar Detalles de Docente"};
 
-    String[] menu1={"Insertar Detalles de Docente","Consultar Detalles de Docente","Actualizar Detalles de Docente"};
+    String[] menu1={"Insertar Detalles de Docente","Consultar Detalles de Docente"};
 
     String[] activities={"DetalleDocenteInsertar","DetalleDocenteEliminar","DetalleDocenteConsultar",
             "DetalleDocenteActualizar"};
 
-    Contact c = new Contact();
-    SQLiteDatabase db;
-    DatabaseHelper helper = new DatabaseHelper(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,9 +29,9 @@ public class DetalleDocenteMenu extends ListActivity {
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu));
 
         String username = getIntent().getStringExtra("Username");
-        Toast.makeText(this,username,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,username,Toast.LENGTH_SHORT).show();
 
-       if(username.equals("walter5lemus")) {
+       if(!username.equals("admin")) {
            ArrayAdapter<String> adapter = new
                    ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu1);
             setListAdapter(adapter);

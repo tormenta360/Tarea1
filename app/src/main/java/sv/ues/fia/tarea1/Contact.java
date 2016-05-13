@@ -4,9 +4,12 @@ package sv.ues.fia.tarea1;
  * Created by TruenoBlanco on 11/5/2016.
  */
 public class Contact {
-
-    String name ,email,uname,pass,rol;
+    String name ,email,uname,pass;
     int id;
+
+    public int getId() {
+        return id;
+    }
 
     public void setName(String name)
     {
@@ -41,19 +44,7 @@ public class Contact {
         return this.pass;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
     }
 }
