@@ -1,5 +1,6 @@
 package sv.ues.fia.tarea1;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class PTGActivity extends AppCompatActivity {
-    DatabaseHelper helper = new DatabaseHelper(this);
+    ControlBD helper = new ControlBD(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,21 @@ public class PTGActivity extends AppCompatActivity {
             String str = a.getText().toString();
             EditText b = (EditText)findViewById(R.id.TFpassword);
             String pass = b.getText().toString();
+
+            Usuario u;
             String password = helper.searchPass(str);
+
+
+//            u = helper.verificarCredenciales(u);
+
+            //u.setNomusuario(str);
+            //u.setClave(pass);
+
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Autenticando...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
 
             if ( str.equals("") || pass.equals("")){
                 Toast temp = Toast.makeText(this, "Ingrese los campos mostrados!", Toast.LENGTH_SHORT);
@@ -45,7 +60,11 @@ public class PTGActivity extends AppCompatActivity {
                 if(pass.equals(password))
                 {
                     Intent i = new Intent(this, PTGActivity1.class);
-                    i.putExtra("Username",str);
+
+                    u = helper.consultarId(str);
+                    i.putExtra("nomusuario", str);
+                    i.putExtra("idusuario", u.getIdusuario());
+                    Toast.makeText(PTGActivity.this, u.getIdusuario(), Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }
                 else
@@ -53,17 +72,13 @@ public class PTGActivity extends AppCompatActivity {
                     Toast temp = Toast.makeText(this, "Usuario y contrasena incorrecto!", Toast.LENGTH_SHORT);
                     temp.show();
                 }
+                progressDialog.dismiss();
             }
 
 
 
         }
-        if(v.getId() == R.id.Bsignup)
-        {
-            Intent i = new Intent(this, SingUp.class);
-            startActivity(i);
 
-        }
 
     }
 

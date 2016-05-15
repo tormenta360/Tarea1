@@ -3,51 +3,72 @@ package sv.ues.fia.tarea1;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-public class DocenteMenu extends ListActivity {
+import java.util.ArrayList;
 
-    String[] menu={"Insertar Docente","Eliminar Docente","Consultar Docente","Actualizar Docente"};
-    String[] activities={"DocenteInsertar","DocenteEliminar","DocenteConsultar", "DocenteActualizar"};
-    String[] menu1={"Insertar Detalles de Docente","Consultar Detalles de Docente"};
-    Contact c;
+public class DocenteMenu  extends ListActivity {
+    private ArrayList<String> resultados= new ArrayList<>();
+    ControlBD helper;
+    String id;
+
+    private String[] opcionCrud = {"Ingresar Docente","Eliminar Docente","Actualizar Docente","Consultar Docente"};
+    private String[] activities = {"DocenteInsertar","DocenteEliminar","DocenteActualizar","DocenteConsultar"};
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        String username = getIntent().getStringExtra("Username");
-        //Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
-
-        if(!username.equals("admin")) {
-            ArrayAdapter<String> adapter = new
-                    ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu1);
-            setListAdapter(adapter);
-        }else {
-            ArrayAdapter<String> adapter = new
-                    ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, menu);
-            setListAdapter(adapter);
+        Bundle bundle = getIntent().getExtras();
+        //setContentView(R.layout.activity_menu_empresa);
+        id = bundle.getString("idusuario");
+        try{
+            helper=new ControlBD(this);
+            Cursor c = helper.obtenerSubMenu(id,"00_");
+            if(c!=null) {
+                if (c.moveToFirst())
+                    do {
+                        String desOpcion = c.getString(0);
+                        resultados.add(desOpcion);
+                    } while (c.moveToNext());
+                c.close();
+            }
+        }catch (SQLiteException e){
+            Log.e(getClass().getSimpleName(),"No se pudo crear o abrir la base de datos");
         }
+        helper.cerrar();
+        ListView listView = getListView();
+        listView.setBackgroundColor(Color.rgb(118, 198, 174));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,resultados);
+        setListAdapter(adapter);
     }
 
     @Override
-    protected void onListItemClick(ListView l,View v,int position,long id){
+    protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        String nombreValue=activities[position];
+        String nombreValue="";
+        String r = resultados.get(position);
 
+        for (int i=0;i<opcionCrud.length;i++)
+            if (r.compareTo(opcionCrud[i])==0){
+                nombreValue=activities[i];
+                break;
+            }
         try{
-            Class<?> clase=Class.forName("sv.ues.fia.tarea1."+nombreValue);
+            Class<?>
+                    clase=Class.forName("sv.ues.fia.tarea1."+nombreValue);
             Intent inte = new Intent(this,clase);
             this.startActivity(inte);
-        }catch(ClassNotFoundException e){
+        }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
     }
-
 
 }

@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sv.ues.fia.tarea1">
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,8 +33,7 @@
         <activity android:name=".DocenteConsultar" />
         <activity android:name=".DocenteInsertar" />
         <activity android:name=".DocenteMenu" />
-        <activity android:name=".SingUp" />
-        <activity android:name=".PTGActivity1"></activity>
+        <activity android:name=".PTGActivity1" />
     </application>
 
 </manifest>

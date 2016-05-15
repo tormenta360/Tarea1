@@ -1,4 +1,36 @@
 <resources>
-    <string name="app_name">Tarea1</string>
+    <string name="app_name">Trabajo de Graduación</string>
     <string name="action_settings" />
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="app_titulo_login">Proyecto de Graduación</string>
+    <string name="Codigo">Codigo</string>
+    <string name="Eliminar">Eliminar</string>
+    <string name="Carnet">Carnet</string>
+    <string name="CodigoGrupo">Codigo Grupo</string>
+    <string name="TipoRol">Tipo Rol</string>
+    <string name="Actualizar">Actualizar</string>
+    <string name="Limpiar">Limpiar</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Consultar">Consultar</string>
+    <string name="Insertar">Insertar</string>
+    <string name="Apellido">Apellido</string>
+    <string name="Escuela">Escuela</string>
+    <string name="Ingresar">Ingresar</string>
+    <string name="Usuario">Usuario</string>
+    <string name="Contraseña">Contraseña</string>
+    <string name="NuevoUsuario">Nuevo Usuario</string>
+    <string name="Hola">hola</string>
 </resources>

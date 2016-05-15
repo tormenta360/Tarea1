@@ -14,6 +14,7 @@ public class ControlBD {
 
     private static final String[]camposDocente = new String [] {"codigodocente","nombredocente","apellidodocente","escuela"};
     private static final String[]camposDetalleDocente = new String [] {"codigo","codigogrupo","tiporol","nombredocente"};
+    private static final String[]camposUsuario = new String [] {"idusuario","nomusuario","clave"};
 
 
     private final Context context;
@@ -108,7 +109,7 @@ public class ControlBD {
             cv.put("codigo", detalleDocente.getCodigoDocente());
             cv.put("codigogrupo", detalleDocente.getCodigoGrupo());
             cv.put("tiporol", detalleDocente.getTipoRol());
-            cv.put("nombredocente",detalleDocente.getNombreDocente());
+            cv.put("nombredocente", detalleDocente.getNombreDocente());
 
             db.update("detalledocente", cv, "codigo = ?", id);
             return "Registro Actualizado Correctamente";
@@ -117,10 +118,52 @@ public class ControlBD {
         }
     }
 
+    public String searchPass(String str) {
+
+        abrir();
+        String query = "select nomusuario, clave from usuario";
+        Cursor cursor = db.rawQuery(query , null);
+        String a, b;
+        b = "not found";
+        if(cursor.moveToFirst())
+        {
+            do{
+                a = cursor.getString(0);
+
+                if(a.equals(str))
+                {
+                    b = cursor.getString(1);
+                    break;
+                }
+            }
+            while(cursor.moveToNext());
+        }
+
+        return b;
+    }
+
+    public Usuario verificarCredenciales(Usuario u) {
+        abrir();
+        String[] idu = {u.getIdusuario(),u.getClave()};
+
+        Cursor cursor = db.query("usuario",null,"nomusuario = ? AND clave = ?",idu,null,null,null);
+        if(cursor.moveToFirst()){
+            //se encontraron datos
+            u.setIdusuario(cursor.getString(0));
+            u.setNomusuario(cursor.getString(1));
+            u.setClave(cursor.getString(2));
+            cursor.close();
+            db.close();
+            return u;
+        }
+        db.close();
+        return null;//no se enontraron coincidencias
+    }
+
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
-        private static final String BASE_DATOS = "proyecto1.s3db";
+        private static final String BASE_DATOS = "consazon.s3db";
         private static final int VERSION = 1;
 
         public DatabaseHelper(Context context) {
@@ -132,6 +175,12 @@ public class ControlBD {
             try{
                 db.execSQL("CREATE TABLE docente(codigodocente VARCHAR(7) NOT NULL PRIMARY KEY, nombredocente VARCHAR(30),apellidodocente VARCHAR(30),escuela VARCHAR(30));");
                 db.execSQL("CREATE TABLE detalledocente(codigo VARCHAR(7) NOT NULL PRIMARY KEY,codigogrupo INTEGER,tiporol VARCHAR(30),nombredocente VARCHAR(30));");
+                db.execSQL("CREATE TABLE usuario(idusuario VARCHAR(2) NOT NULL PRIMARY KEY,nomusuario VARCHAR(30),clave VARCHAR(30));");
+                db.execSQL("CREATE TABLE opcioncrud(idopcion VARCHAR(3) NOT NULL PRIMARY KEY,desopcion VARCHAR2(30),numcrud INTEGER);");
+                db.execSQL("CREATE TABLE accesousuario(idopcion VARCHAR(3) NOT NULL,idusuario VARCHAR(2) NOT NULL,primary key(idopcion,idusuario)constraint fk_accesousuaio_usuario foreign key (idusuario) references usuario(idusuario) on delete restrict,constraint fk_accesousuario_opcioncrud foreign key (idopcion) references opcioncrud(idopcion) on delete restrict);");
+
+
+
 
             }catch(SQLException e){
                 e.printStackTrace();
@@ -208,6 +257,43 @@ public class ControlBD {
 
         return regInsertados;
     }
+
+    public void insertar(Usuario c) {
+        abrir();
+        ContentValues values = new ContentValues();
+        values.put("idusuario" , c.getIdusuario());
+        values.put("nomusuario", c.getNomusuario());
+        values.put("clave", c.getClave());
+        db.insert("usuario", null, values);
+        cerrar();
+    }
+
+    private void insertar(OpcionCrud opcioncrud) {
+        //Ingresando datos a la tabla OpcionCrud sin strings definidas
+        abrir();
+        ContentValues cvo = new ContentValues();
+
+            cvo.put("idopcion", opcioncrud.getIdOpcion());
+            cvo.put("desopcion", opcioncrud.getDesOpcion());
+            cvo.put("numcrud", opcioncrud.getNumCrud());
+            db.insert("opcioncrud", null, cvo);
+        cerrar();
+    }
+
+    private void insertar(AccesoUsuario acceso) {
+        abrir();
+        //Ingresando datos a la tabla AccesoUsuario sin strings definidas
+        ContentValues cva = new ContentValues();
+            cva.put("idusuario", acceso.getIdUsuario());
+            cva.put("idopcion", acceso.getIdOpcion());
+            db.insert("accesousuario", null, cva);
+        cerrar();
+
+    }
+
+
+
+
 
 
 
@@ -293,9 +379,88 @@ public class ControlBD {
         final int[] VDcodigogrupo = {01,02};
         final String[] VDtiporol = {"Jurado","Docente"};
 
+
+        final String[] VUidUsuario = {"00","01","02"};
+        final String[] VUnomUsuario = {"admin","consultor","otro"};
+        final String[] VUclave = {"pdm","pdm","12345"};
+
+        final String[] VOidOpcion = {"000","001","002","003","004",
+                "010","011","012","013","014",
+                /*"020","021","022","023","024",
+                "030","031","032","033","034",
+                "040","041","042","043","044",
+                "050","051","052","053","054",
+                "060","061","062","063","064",
+                "070","071","072","073","074",
+                "080","081","082","083","084",
+                "090","091","092","093","094",
+                "100","101","102","103","104"*/};
+
+        final String[] VOdesOpcion = {"Menu Docente","Ingresar Docente","Eliminar Docente","Actualizar Docente","Consultar Docente",
+                "Menu Detalle Docente","Ingresar Detalle Docente","Eliminar Detalle Docente","Actualizar Detalle Docente","Consultar Detalle Docente"//,
+                /*"Menu Docente","Ingresar Docente","Eliminar Docente","Actualizar Docente","Consultar Docente",
+                "Menu Empresa","Ingresar Empresa","Eliminar Empresa","Actualizar Empresa","Consultar Empresa",
+                "Menu Especialización","Ingresar Especialización","Eliminar Especialización","Actualizar Especialización","Consultar Especialización",
+                "Menu Experiencia Laboral","Ingresar Experiencia","Eliminar Experiencia","Actualizar Experiencia","Consultar Experiencia",
+                "Menu Grados Académicos","Ingresar Grado Académico","Eliminar Grado Académico","Actualizar Grado Académico","Consulta Grado Académico",
+                "Menu de Institución","Ingresar Institución","Eliminar Institución","Actualizar Institucion","Consultar Institución",
+                "Menu Materia","Ingresar Materia","Eliminar Materia","Actualizar Materia","Consultar Materia",
+                "Menu Materias Impartidas","Ingresar Materia Impartida","Eliminar Materia Impartida","Actualizar Materia Impartida","Consultar Materia Impartida",
+                "Menu Tipo de Contratación","Ingresar Tipo","Eliminar Tipo","Actualizar Tipo","Consultar Tipo"*/};
+
+        final int[] VOnumCrud = {0,1,2,3,4,
+                0,1,2,3,4//,
+                /*0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,*/
+                /*0/*,1,2,3,4*/};
+
+        final String[] VAidUsuario = {"00","00","00","00","00",
+                "00","00","00","00","00",
+                /*"00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",*/
+                "01","01","01","01","01",
+                "01","01","01","01","01",
+                /*"01","01","01","01","01",
+                "01","01","01","01","01",
+                "01","01",*/"02","02"};
+        final String[] VAidOpcion = {"000","001","002","003","004",
+                "010","011","012","013","014"//,
+               /* "020","021","022","023","024",
+                "030","031","032","033","034",
+                "040","041","042","043","044",
+                "050","051","052","053","054",
+                "060","061","062","063","064",
+                "070","071","072","073","074",
+                "080","081","082","083","084",
+                "090","091","092","093","094",
+                "100","101","102","103","104"*/,
+                "000","004","010","014","020",
+                "024","030","034","040","044",
+                /*"050","054","060","064","070",
+                "074","080","084","090","094",
+                "100","104",*/"000","004"};
+
+
+
         abrir();
         db.execSQL("DELETE FROM docente");
         db.execSQL("DELETE FROM detalledocente");
+        db.execSQL("DELETE FROM usuario");
+        db.execSQL("DELETE FROM opcioncrud");
+        db.execSQL("DELETE FROM accesousuario");
 
         Docente docente = new Docente();
         for(int i=0;i<2;i++){
@@ -315,9 +480,70 @@ public class ControlBD {
 
             insertar(detalleDocente);
         }
+        Usuario usuario = new Usuario();
+        for(int i=0;i<3; i++) {
+            usuario.setIdusuario(VUidUsuario[i]);
+            usuario.setNomusuario(VUnomUsuario[i]);
+            usuario.setClave(VUclave[i]);
+
+            insertar(usuario);
+        }
+
+        OpcionCrud opcioncrud = new OpcionCrud();
+        for(int i=0;i<VOidOpcion.length; i++) {
+            opcioncrud.setIdOpcion(VOidOpcion[i]);
+            opcioncrud.setDesOpcion(VOdesOpcion[i]);
+            opcioncrud.setNumCrud(VOnumCrud[i]);
+
+            insertar(opcioncrud);
+        }
+
+        AccesoUsuario acceso = new AccesoUsuario();
+        for (int i=0;i<VAidUsuario.length;i++){
+            acceso.setIdUsuario(VAidUsuario[i]);
+            acceso.setIdOpcion(VAidOpcion[i]);
+
+            insertar(acceso);
+        }
+
+
+
+
         cerrar();
         return "Tablas LLenadas con exito";
     }
 
 
+
+    public Cursor obtenerMenuUsuario(String id){
+        String sql = "select oc.desopcion, oc.numcrud from usuario u "+
+                "join accesousuario au on u.idusuario = au.idusuario and u.idusuario='"+id+"'\n" +
+                "join opcioncrud oc on au.idopcion = oc.idopcion and oc.numcrud='0'";
+        abrir();
+        return db.rawQuery(sql, null);
+    }
+
+    public Cursor obtenerSubMenu(String id, String idOpcion){
+        String sql = "select oc.desopcion, oc.numcrud from usuario u "+
+                "join accesousuario au on u.idusuario = au.idusuario and u.idusuario='"+id+"'\n" +
+                "join opcioncrud oc on au.idopcion = oc.idopcion and oc.numcrud!='0' and au.idopcion like '"+idOpcion+"'";
+        abrir();
+        return db.rawQuery(sql, null);
+    }
+
+    public Usuario consultarId(String nomusuario) {
+        String[] id = {nomusuario};
+
+        Cursor cursor = db.query("usuario", camposUsuario, "nomusuario = ?", id, null, null, null);
+        if(cursor.moveToFirst()){
+            Usuario detalledocente = new Usuario();
+            detalledocente.setIdusuario(cursor.getString(0));
+            detalledocente.setNomusuario(cursor.getString(1));
+            detalledocente.setClave(cursor.getString(2));
+
+            return detalledocente;
+        }else{
+            return null;
+        }
+    }
 }

@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Codigo"
+        android:text="@string/Carnet"
         android:id="@+id/textView13"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -29,7 +29,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Eliminar"
+        android:text="@string/Eliminar"
         android:id="@+id/btnEliminar"
         android:layout_below="@+id/editCodigo"
         android:layout_alignParentLeft="true"
