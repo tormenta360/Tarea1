@@ -23,8 +23,8 @@ public class DocenteActualizar extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_docente_actualizar);
         spinner = (Spinner) findViewById(R.id.spinnerTipoContrato);
-        String []opciones={"Ley de Salario", "Contrato", "Horas Clase"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
+        ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(this,R.array.tipoContrato,android.R.layout.simple_spinner_item);
+
 
 
         helper = new ControlBD(this);
@@ -34,7 +34,7 @@ public class DocenteActualizar extends Activity {
 
         editCorreo = (EditText) findViewById(R.id.editCorreo);
         editTelefono =(EditText) findViewById(R.id.editTelefono);
-        spinner.setAdapter(adapter);
+        spinner.setAdapter(adaptador);
 
     }
     public void actualizarDocente(View v) {

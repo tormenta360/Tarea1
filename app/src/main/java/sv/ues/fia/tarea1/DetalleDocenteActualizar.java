@@ -23,13 +23,12 @@ public class DetalleDocenteActualizar extends Activity {
         helper = new ControlBD(this);
 
         spinnerl = (Spinner) findViewById(R.id.spinner);
-        String []opciones={"Jurado","Docente"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
+        ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(this,R.array.tiporol,android.R.layout.simple_spinner_item);
 
         editCodigo = (EditText) findViewById(R.id.editCodigo);
         editCodigoGrupo = (EditText) findViewById(R.id.editCodigoGrupo);
         editNombreDocente = (EditText) findViewById(R.id.editNombreDocente);
-        spinnerl.setAdapter(adapter);
+        spinnerl.setAdapter(adaptador);
     }
     public void actualizarDetalleDocente(View v) {
 

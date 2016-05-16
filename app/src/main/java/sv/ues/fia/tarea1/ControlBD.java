@@ -22,9 +22,12 @@ public class ControlBD {
     private static final String[]camposLocal_Evaluacion = new String[] {"codigo_local", "numero_evaluacion", "nombre_local", "disponible", "lugar"};
     private static final String[] camposEstudiante = new String[]{"carnet", "nombres_estudiante", "apellidos_estudiante"};
 
+
+
     private final Context context;
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
+
 
     public ControlBD(Context ctx) {
         this.context = ctx;
@@ -1229,7 +1232,6 @@ public class ControlBD {
         final String[] VDcorreo={"lv10022@ues.edu.sv","sc12054@ues.edu.sv"};
         final String[] VDtelefono={"22250001","22250002"};
 
-
         final int[] VPnumero_tema = {1, 2, 3, 4};
         final int[] VPcodigo_grupo = {1, 2, 3, 4};
         final String[] VPtema_perfil = {"Sistema Bienestar", "Investigacion ecnologia", "Sistema de inventario", "Sistema contable"};
@@ -1248,7 +1250,7 @@ public class ControlBD {
 
         //Detalle_Evaluacion
         final int[]VDnumero_evaluacion = {1,2,3,4};
-        final String[]VDcarnet = {"OO12035","OF12044","GG11098","CC12021"};
+        final String[]VDcarnet = {"AA11011","BB12012","CC13013","EE14014"};
 
         //Local_Evaluacion
         final int[]VLcodigo_local = {301,21,22,33};
@@ -1257,7 +1259,6 @@ public class ControlBD {
         final String[]VLdisponible = {"Disponible", "No disponible", "No disponible", "Disponible"};
         final String[]VLlugar = {"Facultad de Ingenieria","Facultad de Economia","Falcutad de Odontologia","Facultad de Agronomia"};
 
-        // Estudiante
         final String[] VAcarnet = {"OO12035","OF12044","GG11098","CC12021"};
         final String[] VAnombres = {"Carlos R.","Pedro S.","Sara A.","Gabriela F."};
         final String[] VAapellidos = {"Orantes Ortiz","Ortiz F.","Gonzales García","Coto Carrío"};
@@ -1349,26 +1350,17 @@ public class ControlBD {
         abrir();
         db.execSQL("DELETE FROM docente");
         db.execSQL("DELETE FROM detalledocente");
-        db.execSQL("DELETE FROM grupo");
-        db.execSQL("DELETE FROM estudiante_grupo");
         db.execSQL("DELETE FROM usuario");
         db.execSQL("DELETE FROM opcioncrud");
         db.execSQL("DELETE FROM accesousuario");
         db.execSQL("DELETE FROM propuesta_perfil");
         db.execSQL("DELETE FROM tipo_proyecto");
         db.execSQL("DELETE FROM evaluacion");
-        db.execSQL("DELETE FROM estudiante");
         db.execSQL("DELETE FROM detalle_evaluacion");
         db.execSQL("DELETE FROM local_evaluacion");
-
-
-        Grupo g = new Grupo();
-        for(int i=0;i<4;i++){
-            g.setCodigo_grupo(vegcodigos[i]);
-            g.setNumero_integrantes(vgintegrantes[i]);
-            g.setAño(vgaño[i]);
-            insertar(g);
-        }
+        db.execSQL("DELETE FROM estudiante");
+        db.execSQL("DELETE FROM grupo");
+        db.execSQL("DELETE FROM estudiante_grupo");
 
         Docente docente = new Docente();
         for(int i=0;i<2;i++){
@@ -1446,15 +1438,6 @@ public class ControlBD {
             insertar(evaluacion);
         }
 
-        Estudiante e = new Estudiante();
-        for(int i=0;i<4;i++){
-            e.setCarnet(VAcarnet[i]);
-            e.setNombres(VAnombres[i]);
-            e.setApellidos(VAapellidos[i]);
-
-            insertar(e);
-        }
-
         Local_Evaluacion local_evaluacion = new Local_Evaluacion();
         for(int i=0; i<4; i++)
         {
@@ -1466,7 +1449,6 @@ public class ControlBD {
             insertar(local_evaluacion);
         }
 
-
         Detalle_Evaluacion detalle_evaluacion = new Detalle_Evaluacion();
         for(int i=0;i<4;i++) {
             detalle_evaluacion.setNumero_evaluacion(VDnumero_evaluacion[i]);
@@ -1474,6 +1456,21 @@ public class ControlBD {
             insertar(detalle_evaluacion);
         }
 
+        Estudiante e = new Estudiante();
+        for(int i=0;i<4;i++){
+            e.setCarnet(VAcarnet[i]);
+            e.setNombres(VAnombres[i]);
+            e.setApellidos(VAapellidos[i]);
+
+            insertar(e);
+        }
+        Grupo g = new Grupo();
+        for(int i=0;i<4;i++){
+
+            g.setNumero_integrantes(vgintegrantes[i]);
+            g.setAño(vgaño[i]);
+            insertar(g);
+        }
 
         EstudianteGrupo eg = new EstudianteGrupo();
         for(int i=0;i<4;i++){

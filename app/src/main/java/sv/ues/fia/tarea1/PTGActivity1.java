@@ -27,16 +27,17 @@ public class PTGActivity1 extends ListActivity {
     //String[] activities={"PropuestaPerfilMenuActivity","TipoProyectoMenuActivity"};
 
     String[] activities = {"DocenteMenu","DetalleDocenteMenu","PropuestaPerfilMenuActivity","TipoProyectoMenuActivity",
-                           "EvaluacionMenuActivity", "Detalle_EvaluacionMenuActivity", "Local_EvaluacionMenuActivity",
-                           "MenuEstudianteActivity", "MenuGrupoActivity", "MenuEstudianteGrupoActivity"};
+                           "Detalle_EvaluacionMenuActivity", "Local_EvaluacionMenuActivity",
+                           "MenuEstudianteActivity", "MenuGrupoActivity", "MenuEstudianteGrupoActivity",
+                            "EvaluacionMenuActivity", };
 
 
     String[] OpcionCrud = {"Menu Docente","Menu Detalle Docente",
-                         "Tabla Propuesta Perfil","Tabla Tipo Proyecto",
-                         "Tabla Evaluación", "Tabla Detalle Evaluación",
-                         "Tabla Local Evaluación","Tabla Estudiante",
-                         "Tabla Grupo","Estudiante-Grupo",
-                         "LLenar Base de Datos"};
+                         "Menu Propuesta Perfil","Menu Tipo Proyecto",
+                        "Menu Detalle Evaluación",
+                         "Menu Local Evaluación","Menu Estudiante",
+                         "Menu Grupo","Menu Estudiante-Grupo",
+                        "Menu Evaluación"};
 
 
     private ArrayList<String> resultados = new ArrayList<>();
@@ -50,6 +51,7 @@ public class PTGActivity1 extends ListActivity {
 
         c = (TextView) findViewById(R.id.cabecera);
         Bundle bundle = getIntent().getExtras();
+
         username = bundle.getString("nousuario");
         idUser = bundle.getString("idusuario");
         try {
