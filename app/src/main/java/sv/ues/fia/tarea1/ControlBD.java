@@ -1486,8 +1486,4 @@ public class ControlBD {
         cerrar();
         return "Tablas LLenadas con exito";
     }
-
-
-
-
 }
