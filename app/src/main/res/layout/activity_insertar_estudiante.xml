@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="sv.ues.fia.tarea1.InsertarEstudianteActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/tve"
+        android:id="@+id/tve"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/tvcarnete"
+        android:id="@+id/tvcarnete"
+        android:layout_below="@+id/tve"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="55dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/tvnombrese"
+        android:id="@+id/tvnombrese"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/tvcarnete"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/tvapellidose"
+        android:id="@+id/tvapellidose"
+        android:layout_below="@+id/tvnombrese"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/binsertare"
+        android:id="@+id/binsertare"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/tvapellidose"
+        android:layout_toRightOf="@+id/tvcarnete"
+        android:layout_toEndOf="@+id/tvcarnete"
+        android:onClick="insertarEstudiante"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/blimpiare"
+        android:id="@+id/blimpiare"
+        android:layout_alignTop="@+id/binsertare"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="43dp"
+        android:layout_marginEnd="43dp"
+        android:singleLine="false"
+        android:onClick="limpiarTexto"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etcarnete"
+        android:layout_alignBottom="@+id/tvcarnete"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/binsertare"
+        android:layout_toEndOf="@+id/binsertare"
+        android:maxLength="7"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etnombrese"
+        android:layout_alignBottom="@+id/tvnombrese"
+        android:layout_alignRight="@+id/etcarnete"
+        android:layout_alignEnd="@+id/etcarnete"
+        android:layout_toRightOf="@+id/binsertare"
+        android:layout_toEndOf="@+id/binsertare" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etapellidose"
+        android:layout_alignBottom="@+id/tvapellidose"
+        android:layout_alignRight="@+id/etnombrese"
+        android:layout_alignEnd="@+id/etnombrese"
+        android:layout_toRightOf="@+id/binsertare"
+        android:layout_toEndOf="@+id/binsertare" />
+</RelativeLayout>

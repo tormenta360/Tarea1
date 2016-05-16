@@ -59,6 +59,22 @@
         <activity android:name=".Local_EvaluacionEliminarActivity" />
         <activity android:name=".Local_EvaluacionActualizarActivity" />
         <activity android:name=".Local_EvaluacionConsultarActivity"></activity>
+
+        <activity android:name=".MenuGrupoActivity" />
+        <activity android:name=".MenuEstudianteGrupoActivity" />
+        <activity android:name=".MenuEstudianteActivity" />
+        <activity android:name=".InsertarGrupoActivity" />
+        <activity android:name=".ActualizarGrupoActivity" />
+        <activity android:name=".ConsultarGrupoActivity" />
+        <activity android:name=".EliminarGrupoActivity" />
+        <activity android:name=".InsertarEstudianteActivity" />
+        <activity android:name=".ConsultarEstudianteActivity" />
+        <activity android:name=".ActualizarEstudianteActivity" />
+        <activity android:name=".EliminarEstudianteActivity" />
+        <activity android:name=".InsertarEstudianteGrupoActivity" />
+        <activity android:name=".ConsultarEstudianteGrupoActivity" />
+        <activity android:name=".ActualizarEstudianteGrupoActivity" />
+        <activity android:name=".EliminarEstudianteGrupoActivity"></activity>
     </application>
 
 </manifest>

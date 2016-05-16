@@ -20,6 +20,7 @@ public class ControlBD {
     private static final String[]camposEvaluacion = new String[] {"numero_evaluacion", "numero_tema", "nombre_evaluacion", "nota_global"};
     private static final String[]camposDetalle_Evaluacion = new String[] {"numero_evaluacion", "carnet"};
     private static final String[]camposLocal_Evaluacion = new String[] {"codigo_local", "numero_evaluacion", "nombre_local", "disponible", "lugar"};
+    private static final String[] camposEstudiante = new String[]{"carnet", "nombres_estudiante", "apellidos_estudiante"};
 
 
 
@@ -57,6 +58,26 @@ public class ControlBD {
                 db.execSQL("CREATE TABLE evaluacion(numero_evaluacion INTEGER PRIMARY KEY NOT NULL,numero_tema INTEGER,nombre_evaluacion VARCHAR(25),nota_global REAL);");
                 db.execSQL("CREATE TABLE detalle_evaluacion(numero_evaluacion INTEGER PRIMARY KEY NOT NULL,carnet VARCHAR(7));");
                 db.execSQL("CREATE TABLE local_evaluacion(codigo_local INTEGER PRIMARY KEY NOT NULL,numero_evaluacion INTEGER,nombre_local VARCHAR(20),disponible VARCHAR(20),lugar VARCHAR(20));");
+                db.execSQL("create table grupo(\n" +
+                        "codigo_grupo integer not null,\n" +
+                        "numero_integrantes integer not null,\n" +
+                        "ano integer not null,\n" +
+                        "primary key (codigo_grupo));");
+                db.execSQL("create table estudiante (\n" +
+                        "carnet               varchar(7)                     not null,\n" +
+                        "nombres_estudiante       varchar(30)                    not null,\n" +
+                        "apellidos_estudiante     varchar(30)                    not null,\n" +
+                        "primary key (carnet)\n" +
+                        ");");
+                db.execSQL("create table estudiante_grupo (\n" +
+                        "carnet               varchar(7)                     not null,\n" +
+                        "codigo_grupo         integer                        not null,\n" +
+                        "primary key (carnet, codigo_grupo),\n" +
+                        "foreign key (carnet)\n" +
+                        "      references estudiante (carnet),\n" +
+                        "foreign key (codigo_grupo)\n" +
+                        "      references grupo (codigo_grupo)\n" +
+                        ");");
 
             }catch(SQLException e){
                 e.printStackTrace();
@@ -71,6 +92,231 @@ public class ControlBD {
 // TODO Auto-generated method stub
         }
     }
+
+
+
+
+    public String insertar(Estudiante estudiante) {
+
+
+        String regInsertados = null;
+        regInsertados = "Registro Insertado Nº= ";
+        long contador = 0;
+        ContentValues est = new ContentValues();
+        est.put("carnet", estudiante.getCarnet());
+        est.put("nombres_estudiante", estudiante.getNombres());
+        est.put("apellidos_estudiante", estudiante.getApellidos());
+
+        contador = db.insert("estudiante", null, est);
+        if (contador == -1 || contador == 0) {
+            regInsertados = "Error al Insertar el registro, Registro Duplicado.Verificar inserción ";
+        } else {
+            regInsertados = regInsertados + contador;
+        }
+
+        return regInsertados;
+    }
+
+    public String insertar(Grupo grupo) {
+
+
+        String regInsertados = "Registro Insertado Nº= ";
+        long contador = 0;
+        ContentValues g = new ContentValues();
+        g.put("numero_integrantes", grupo.getNumero_integrantes());
+        g.put("ano", grupo.getAño());
+
+        contador = db.insert("grupo", null, g);
+        if (contador == -1 || contador == 0) {
+            regInsertados = "Error al Insertar el registro, Registro Duplicado.Verificar inserción ";
+        } else {
+            regInsertados = regInsertados + contador;
+        }
+        return regInsertados;
+
+    }
+
+    public String insertar(EstudianteGrupo estudianteGrupo) {
+        String regInsertados = "Registro Insertado Nº= ";
+        long contador = 0;
+
+        if (verificarIntegridad(estudianteGrupo, 19)) {
+
+            ContentValues g = new ContentValues();
+            g.put("carnet", estudianteGrupo.getCarnet());
+            g.put("codigo_grupo", estudianteGrupo.getCodigoGrupo());
+
+            contador = db.insert("estudiante_grupo", null, g);
+            if (contador == -1 || contador == 0) {
+                regInsertados = "Error al Insertar el registro, Registro Duplicado.Verificar inserción ";
+            } else {
+                regInsertados = regInsertados + contador;
+            }
+
+            return regInsertados;
+        }
+        return "Verifique el carnet y el numero de grupo e intente de nuevo";
+
+    }
+
+    //Actualizaciones
+
+    public String actualizar(Estudiante estudiante) {
+        try {
+
+            if (verificarIntegridad(estudiante,18)){
+                String[] id = {estudiante.getCarnet()};
+                System.out.println(id.toString());
+
+                ContentValues cv = new ContentValues();
+
+                cv.put("carnet", estudiante.getCarnet());
+                cv.put("nombres_estudiante", estudiante.getNombres());
+                cv.put("apellidos_estudiante", estudiante.getApellidos());
+
+                db.update("estudiante", cv, "carnet=?", id);
+                return "Registro Actualizado Correctamente";
+            }
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+        }
+        return "No existe el estudiante con carnet: "+estudiante.getCarnet();
+    }
+
+    public String actualizar(EstudianteGrupo estudianteGrupo) {
+        if(verificarIntegridad(estudianteGrupo,20)) {
+            String[] id = {estudianteGrupo.getCarnet()};
+
+            ContentValues eg = new ContentValues();
+            eg.put("carnet", estudianteGrupo.getCarnet());
+            eg.put("codigo_grupo",estudianteGrupo.getCodigoGrupo());
+
+            db.update("estudiante_grupo", eg, "carnet = ? ", id);
+
+            return "Registro Actualizado Correctamente";
+        }else
+            return "El estudiante: "+estudianteGrupo.getCarnet()+" no está en el grupo: "+estudianteGrupo.getCodigoGrupo();
+    }
+
+    public String actualizar(Grupo grupo) {
+        String[] id = {String.valueOf(grupo.getCodigo_grupo())};
+
+        if (verificarIntegridad(grupo,17)){
+            ContentValues cv = new ContentValues();
+            cv.put("numero_integrantes", grupo.getNumero_integrantes());
+            cv.put("ano", grupo.getAño());
+
+            db.update("grupo", cv, "codigo_grupo = ?", id);
+            return "Registro Actualizado Correctamente";
+        }
+        return "No existe el grupo número: "+grupo.getCodigo_grupo();
+
+    }
+
+    //Eliminar
+
+    public String eliminar(Estudiante estudiante) {
+
+        String regAfectados="filas afectadas= ";
+        int contador=0;
+
+
+        contador+=db.delete("estudiante", "carnet='"+estudiante.getCarnet() + "'", null);
+        regAfectados += contador;
+        return regAfectados;
+
+    }
+
+    public String eliminar(Grupo grupo) {
+        String regAfectados="filas afectadas= ";
+        int contador=0;
+
+        contador+=db.delete("grupo", "codigo_grupo='"+grupo.getCodigo_grupo() + "'", null);
+        regAfectados += contador;
+        return regAfectados;
+    }
+
+    public String eliminar(EstudianteGrupo eg) {
+
+        String regAfectados="filas afectadas= ";
+        int contador=0;
+        String where = "carnet = '"+eg.getCarnet()+"'";
+        where = where+ " and codigo_grupo='"+eg.getCodigoGrupo()+"'";
+
+        contador+=db.delete("estudiante_grupo", where, null);
+        regAfectados += contador;
+        return regAfectados;
+
+    }
+
+    //CONSULTAS
+
+    public Estudiante consultarEstudiante(String carnet) {
+
+        String[] id = {carnet};
+        Cursor cursor = db.query("estudiante", camposEstudiante, "carnet = ?", id, null, null, null);
+        if(cursor.moveToFirst()){
+            Estudiante estudiante = new Estudiante();
+            estudiante.setCarnet(cursor.getString(0));
+            estudiante.setNombres(cursor.getString(1));
+            estudiante.setApellidos(cursor.getString(2));
+
+            return estudiante;
+        }else{
+            return null;
+        }
+
+    }
+
+    public EstudianteGrupo consultarEstudianteGrupo(String carnet, int codigo_grupo) {
+        String[] id = {carnet,String.valueOf(codigo_grupo)};
+        String sql = "select e.carnet,est.nombres_estudiante,est.apellidos_estudiante,g.codigo_grupo,g.numero_integrantes,g.ano from\n" +
+                "estudiante_grupo e\n" +
+                "inner join estudiante est\n" +
+                "on e.carnet = est.carnet\n" +
+                "inner join grupo g\n" +
+                "on e.codigo_grupo = g.codigo_grupo where e.carnet=? and e.codigo_grupo=?";
+        try{
+            Cursor c = db.rawQuery(sql,id);
+            if(c.moveToFirst()){
+                EstudianteGrupo eg = new EstudianteGrupo();
+                eg.setCarnet(c.getString(c.getColumnIndex("carnet")));
+                eg.setNombres(c.getString(c.getColumnIndex("nombres_estudiante")));
+                eg.setApellidos(c.getString(c.getColumnIndex("apellidos_estudiante")));
+                eg.setIntegrantes(c.getInt(c.getColumnIndex("numero_integrantes")));
+                eg.setAño(c.getInt(c.getColumnIndex("ano")));
+
+
+                return eg;
+
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+
+
+    }
+
+    public Grupo consultarGrupo(int codigoGrupo) {
+        String[] id = {String.valueOf(codigoGrupo)};
+        Cursor cursor = db.query("grupo", null, "codigo_grupo = ?", id,null, null, null);
+        if(cursor.moveToFirst()){
+            Grupo grupo = new Grupo();
+            grupo.setCodigo_grupo(cursor.getInt(cursor.getColumnIndex("codigo_grupo")));
+            grupo.setNumero_integrantes(cursor.getInt(cursor.getColumnIndex("numero_integrantes")));
+            grupo.setAño(cursor.getInt(cursor.getColumnIndex("ano")));
+
+            return grupo;
+        }else{
+            return null;
+        }
+
+    }
+
 
     public String insertar(Evaluacion evaluacion){
 
@@ -737,9 +983,9 @@ public class ControlBD {
 
                 Cursor cursor1 = db.query("docente", null, "codigodocente = ?", id1, null, null, null);
                 // Cursor cursor2 = null;
-                //Cursor cursor2 = db.query("grupo", null, "codigo_grupo = ?", id2, null, null, null);
+                Cursor cursor2 = db.query("grupo", null, "codigo_grupo = ?", id2, null, null, null);
 
-                if (cursor1.moveToFirst() /*&& cursor2.moveToFirst()*/){
+                if (cursor1.moveToFirst() && cursor2.moveToFirst()){
                     //Se encontraron datos
                     return true;
 
@@ -899,6 +1145,74 @@ public class ControlBD {
                 return false;
             }
 
+            case 17:
+            {
+                Grupo g = (Grupo) dato;
+                String [] id = {String.valueOf(g.getCodigo_grupo())};
+                abrir();
+                Cursor c = db.query("grupo",null,"codigo_grupo = ?",id,null,null,null);
+
+                if(c.moveToFirst()){
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            //Existe Estudiante
+            case 18:
+            {
+                Estudiante e = (Estudiante) dato;
+                String [] id = {e.getCarnet()};
+                abrir();
+                Cursor c = db.query("Estudiante",null,"carnet = ?",id,null,null,null);
+
+                if(c.moveToFirst()){
+                    return true;
+                }
+
+                return false;
+
+            }
+            //Verificar que al inscribirse esxite grupo y estudiante
+            case 19:
+            {
+                EstudianteGrupo eg = (EstudianteGrupo) dato;
+                String[] id1 = {eg.getCarnet()};
+                String[] id2 = {String.valueOf(eg.getCodigoGrupo())};
+
+                Cursor c1 = db.query("grupo", null, "codigo_grupo = ?", id2, null,null, null);
+
+                Cursor c2 = db.query("estudiante", null, "carnet = ?", id1,null, null, null);
+
+                if(c1.moveToFirst() && c2.moveToFirst()){
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+
+            }
+
+            case 20:
+            {
+
+                //Verificacion de cambio de grupo
+
+                EstudianteGrupo eg = (EstudianteGrupo) dato;
+                if(verificarIntegridad(new Estudiante(eg.getCarnet()),2)){
+                    if(verificarIntegridad(new Grupo(eg.getCodigoGrupo()),1)){
+                        return true;
+                    }else {
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+
+            }
+
+
 
             default:
                 return false;
@@ -945,6 +1259,16 @@ public class ControlBD {
         final String[]VLdisponible = {"Disponible", "No disponible", "No disponible", "Disponible"};
         final String[]VLlugar = {"Facultad de Ingenieria","Facultad de Economia","Falcutad de Odontologia","Facultad de Agronomia"};
 
+        final String[] VAcarnet = {"OO12035","OF12044","GG11098","CC12021"};
+        final String[] VAnombres = {"Carlos R.","Pedro S.","Sara A.","Gabriela F."};
+        final String[] VAapellidos = {"Orantes Ortiz","Ortiz F.","Gonzales García","Coto Carrío"};
+
+        final int[] vgintegrantes = {1,3,5,2};
+        final int[] vgaño = {2009,2003,2005,2002};
+
+        final int[] vegcodigos = {4,2,2,1};
+
+
 
         final String[] VUidUsuario = {"00","01","02"};
         final String[] VUnomUsuario = {"admin","consultor","otro"};
@@ -957,10 +1281,10 @@ public class ControlBD {
                 "040","041","042","043","044",
                 "050","051","052","053","054",
                 "060","061","062","063","064",
-                /*"070","071","072","073","074",
+                "070","071","072","073","074",
                 "080","081","082","083","084",
                 "090","091","092","093","094",
-                "100","101","102","103","104"*/};
+                "100"/*,"101","102","103","104"*/};
 
         final String[] VOdesOpcion = {"Menu Docente","Ingresar Docente","Eliminar Docente","Actualizar Docente","Consultar Docente",
                 "Menu Detalle Docente","Ingresar Detalle Docente","Eliminar Detalle Docente","Actualizar Detalle Docente","Consultar Detalle Docente",
@@ -969,10 +1293,12 @@ public class ControlBD {
                 "Tabla Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
                 "Tabla Detalle Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
                 "Tabla Local Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
-                /*"Menu de Institución","Ingresar Institución","Eliminar Institución","Actualizar Institucion","Consultar Institución",
-                "Menu Materia","Ingresar Materia","Eliminar Materia","Actualizar Materia","Consultar Materia",
-                "Menu Materias Impartidas","Ingresar Materia Impartida","Eliminar Materia Impartida","Actualizar Materia Impartida","Consultar Materia Impartida",
-                "Menu Tipo de Contratación","Ingresar Tipo","Eliminar Tipo","Actualizar Tipo","Consultar Tipo"*/};
+
+                "Tabla Estudiante","Insertar Estudiante", "Eliminar Estudiante", "Consultar Estudiante","Actualizar Estudiante",
+                "Tabla Grupo","Insertar Grupo", "Eliminar Grupo", "Consultar Grupo","Actualizar Grupo",
+                "Estudiante-Grupo","Ingresar a un grupo", "Salir de grupo", "Consultar grupos","Cambiar de grupo",
+
+                "LLenar Base de Datos"/*,"Ingresar Tipo","Eliminar Tipo","Actualizar Tipo","Consultar Tipo"*/};
 
         final int[] VOnumCrud = {0,1,2,3,4,
                 0,1,2,3,4,
@@ -981,10 +1307,10 @@ public class ControlBD {
                 0,1,2,3,4,
                 0,1,2,3,4,
                 0,1,2,3,4,
-                /*0,1,2,3,4,
                 0,1,2,3,4,
-                0,1,2,3,4,*/
-                /*0/*,1,2,3,4*/};
+                0,1,2,3,4,
+                0,1,2,3,4,
+                0/*,1,2,3,4*/};
 
         final String[] VAidUsuario = {"00","00","00","00","00",
                 "00","00","00","00","00",
@@ -993,15 +1319,15 @@ public class ControlBD {
                 "00","00","00","00","00",
                 "00","00","00","00","00",
                 "00","00","00","00","00",
-                /*"00","00","00","00","00",
                 "00","00","00","00","00",
                 "00","00","00","00","00",
-                "00","00","00","00","00",*/
+                "00","00","00","00","00",
+                "00",/*"00","00","00","00",*/
                 "01","01","01","01","01",
                 "01","01","01","01","01",
                 "01","01","01","01","01",
-                /*"01","01","01","01","01",
-                "01","01",*/"02","02"};
+                "01","01","01","01","01",
+                "01","01","02","02"};
         final String[] VAidOpcion = {"000","001","002","003","004",
                 "010","011","012","013","014",
                 "020","021","022","023","024",
@@ -1009,15 +1335,15 @@ public class ControlBD {
                 "040","041","042","043","044",
                 "050","051","052","053","054",
                 "060","061","062","063","064",
-                /*"070","071","072","073","074",
+                "070","071","072","073","074",
                 "080","081","082","083","084",
                 "090","091","092","093","094",
-                "100","101","102","103","104"*,*/
+                "100",/*"101","102","103","104"*,*/
                 "000","004","010","014","020",
                 "024","030","034","040","044",
                 "050","054","060","064","070",
-                /*"074","080","084","090","094",
-                "100","104",*/"000","004"};
+                "074","080","084","090","094",
+                "100","104","000","004"};
 
 
 
@@ -1032,7 +1358,9 @@ public class ControlBD {
         db.execSQL("DELETE FROM evaluacion");
         db.execSQL("DELETE FROM detalle_evaluacion");
         db.execSQL("DELETE FROM local_evaluacion");
-
+        db.execSQL("DELETE FROM estudiante");
+        db.execSQL("DELETE FROM grupo");
+        db.execSQL("DELETE FROM estudiante_grupo");
 
         Docente docente = new Docente();
         for(int i=0;i<2;i++){
@@ -1126,6 +1454,30 @@ public class ControlBD {
             detalle_evaluacion.setNumero_evaluacion(VDnumero_evaluacion[i]);
             detalle_evaluacion.setCarnet(VDcarnet[i]);
             insertar(detalle_evaluacion);
+        }
+
+        Estudiante e = new Estudiante();
+        for(int i=0;i<4;i++){
+            e.setCarnet(VAcarnet[i]);
+            e.setNombres(VAnombres[i]);
+            e.setApellidos(VAapellidos[i]);
+
+            insertar(e);
+        }
+        Grupo g = new Grupo();
+        for(int i=0;i<4;i++){
+
+            g.setNumero_integrantes(vgintegrantes[i]);
+            g.setAño(vgaño[i]);
+            insertar(g);
+        }
+
+        EstudianteGrupo eg = new EstudianteGrupo();
+        for(int i=0;i<4;i++){
+            eg.setCodigoGrupo(vegcodigos[i]);
+            eg.setCarnet(VAcarnet[i]);
+
+            insertar(eg);
         }
 
 

@@ -84,6 +84,70 @@
     <string name="disponible">Disponibilidad</string>
     <string name="lugar">Lugar</string>
 
+    <string name="tve">Ingresar Estudiante</string>
+    <string name="tvcarnete">Carnet</string>
+    <string name="tvnombrese">Nombres</string>
+    <string name="tvapellidose">Apellidos</string>
+    <string name="binsertare">Insertar</string>
+    <string name="blimpiare">Limpiar</string>
+    <string name="tvae">Actualizar Estudiante</string>
+    <string name="tvaecarnet">Carnet</string>
+    <string name="tvaenombres">Nombres</string>
+    <string name="tvaeapellidos">Apellidos</string>
+    <string name="baeinsertar">Actualizar</string>
+    <string name="baelimpiar">Limpiar</string>
+    <string name="tvce">Consultar Estudiante</string>
+    <string name="tvcecarnet">Carnet</string>
+    <string name="tvcenombres">Nombres</string>
+    <string name="tvceapellidos">Apellidos</string>
+    <string name="bceconsultar">Consultar</string>
+    <string name="tvee">Eliminar Estudiante</string>
+    <string name="tveecarnet">Carnet</string>
+    <string name="beeeliminar">Eliminar</string>
+    <string name="bigrestablecer">Restablecer</string>
+    <string name="biginsertar">Ingresar</string>
+    <string name="tvigaño">Año</string>
+    <string name="tvigintegrantes">Número de integrantes</string>
+    <string name="tvigcodigo">Codigo de grupo</string>
+    <string name="tvig">Ingresar grupo nuevo</string>
+    <string name="tvag">Actualizar Grupo</string>
+    <string name="tvagcodigo">Código</string>
+    <string name="tvagintegrantes">No. de Integrantes</string>
+    <string name="tvagaño">Año</string>
+    <string name="bagactualizar">Actualizar</string>
+    <string name="bagrestablecer">Restablecer</string>
+    <string name="tvcgcodigo">Código</string>
+    <string name="bcgconsultar">Consultar</string>
+    <string name="tvcgintegrantes">No. de integrantes</string>
+    <string name="tvcgaño">Año</string>
+    <string name="tvegcodigo">Codigo de grupo</string>
+    <string name="begeliminar">Eliminar grupo</string>
+    <string name="tvieg">Entrar a grupo</string>
+    <string name="tviegcarnet">Carnet</string>
+    <string name="tviegcodigo">Codigo de grupo</string>
+    <string name="biegentrar">Entrar al grupo</string>
+    <string name="bieglimpiar">Limpiar</string>
+    <string name="tvmeg">Cambiar de grupo</string>
+    <string name="tvmegcarnet">Carnet</string>
+    <string name="tvmegcodigo">Codigo de grupo</string>
+    <string name="bmegcambiar">Cambiar</string>
+    <string name="bmeglimpiar">Limpiar</string>
+    <string name="tveeg">Salir del grupo</string>
+    <string name="tveegcarnet">Carnet</string>
+    <string name="tveegcodigo">Código</string>
+    <string name="beegsalir">Salir del grupo</string>
+    <string name="beeglimpiar">Limpiar</string>
+    <string name="tvceg">Consultar grupo inscrito</string>
+    <string name="tvcegcarnet">Carnet</string>
+    <string name="tvcegcodigo">Código de grupo</string>
+    <string name="tvcegnombe">Nombres</string>
+    <string name="tvcegappelido">Apellidos</string>
+    <string name="tvcegaño">Año del grupo</string>
+    <string name="bcegconsultar">Consultar</string>
+    <string name="bceglimpiar">Limpiar</string>
+    <string name="tvcegintegrantes">No. de integrantes</string>
+
+
 
 
 </resources>

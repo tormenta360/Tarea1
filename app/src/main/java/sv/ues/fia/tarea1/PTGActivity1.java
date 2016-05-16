@@ -26,8 +26,17 @@ public class PTGActivity1 extends ListActivity {
     // String[] menu={"Tabla Propuesta Perfil","Tabla Tipo Proyecto","LLenar Base de Datos"};
     //String[] activities={"PropuestaPerfilMenuActivity","TipoProyectoMenuActivity"};
 
-    String[] activities = {"DocenteMenu","DetalleDocenteMenu","PropuestaPerfilMenuActivity","TipoProyectoMenuActivity"};
-    String[] OpcionCrud = {"Menu Docente","Menu Detalle Docente","Tabla Propuesta Perfil","Tabla Tipo Proyecto","LLenar Base de Datos"};
+    String[] activities = {"DocenteMenu","DetalleDocenteMenu","PropuestaPerfilMenuActivity","TipoProyectoMenuActivity",
+                           "EvaluacionMenuActivity", "Detalle_EvaluacionMenuActivity", "Local_EvaluacionMenuActivity",
+                           "MenuEstudianteActivity", "MenuGrupoActivity", "MenuEstudianteGrupoActivity"};
+
+
+    String[] OpcionCrud = {"Menu Docente","Menu Detalle Docente",
+                         "Tabla Propuesta Perfil","Tabla Tipo Proyecto",
+                         "Tabla Evaluación", "Tabla Detalle Evaluación",
+                         "Tabla Local Evaluación","Tabla Estudiante",
+                         "Tabla Grupo","Estudiante-Grupo",
+                         "LLenar Base de Datos"};
 
 
     private ArrayList<String> resultados = new ArrayList<>();

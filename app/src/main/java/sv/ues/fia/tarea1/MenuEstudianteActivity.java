@@ -7,11 +7,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MenuGrupoActivity extends ListActivity {
+public class MenuEstudianteActivity extends ListActivity {
 
-
-    String[] menu = {"Insertar Grupo", "Eliminar Grupo", "Consultar Grupo","Actualizar Grupo"};
-    String[] activities = {"InsertarGrupoActivity", "EliminarGrupoActivity", "ConsultarGrupoActivity","ActualizarGrupoActivity"};
+    String[] menu = {"Insertar Estudiante", "Eliminar Estudiante", "Consultar Estudiante","Actualizar Estudiante"};
+    String[] activities = {"InsertarEstudianteActivity", "EliminarEstudianteActivity", "ConsultarEstudianteActivity","ActualizarEstudianteActivity"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
