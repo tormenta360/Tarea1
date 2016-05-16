@@ -44,6 +44,21 @@
         <activity android:name=".TipoProyectoEliminarActivity" />
         <activity android:name=".TipoProyectoActualizarActivity" />
         <activity android:name=".TipoProyectoConsultarActivity"></activity>
+        <activity android:name=".EvaluacionMenuActivity" />
+        <activity android:name=".EvaluacionInsertarActivity" />
+        <activity android:name=".EvaluacionEliminarActivity" />
+        <activity android:name=".EvaluacionActualizarActivity" />
+        <activity android:name=".EvaluacionConsultarActivity" />
+        <activity android:name=".Detalle_EvaluacionMenuActivity" />
+        <activity android:name=".Detalle_EvaluacionInsertarActivity" />
+        <activity android:name=".Detalle_EvaluacionEliminarActivity" />
+        <activity android:name=".Detalle_EvaluacionActualizarActivity" />
+        <activity android:name=".Detalle_EvaluacionConsultarActivity" />
+        <activity android:name=".Local_EvaluacionMenuActivity" />
+        <activity android:name=".Local_EvaluacionInsertarActivity" />
+        <activity android:name=".Local_EvaluacionEliminarActivity" />
+        <activity android:name=".Local_EvaluacionActualizarActivity" />
+        <activity android:name=".Local_EvaluacionConsultarActivity"></activity>
     </application>
 
 </manifest>

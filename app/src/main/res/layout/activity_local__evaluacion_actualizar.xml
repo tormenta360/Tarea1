@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dip"
+    android:stretchColumns="1" >
+    <TableRow>
+        <TextView android:text="@string/codigo_local" />
+        <EditText
+            android:id="@+id/editCodigo_Local"
+            android:inputType="number" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/numero_evaluacion" />
+        <EditText
+            android:id="@+id/editNumero_Evaluacion"
+            android:inputType="number"  />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/nombre_local" />
+        <EditText
+            android:id="@+id/editNombre_Local"
+            android:inputType="text"
+            android:maxLength="20" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/disponible"/>
+        <Spinner
+            android:id="@+id/spiDisponible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/lugar" />
+        <EditText
+            android:id="@+id/editLugar"
+            android:inputType="text"
+            android:maxLength="20" />
+    </TableRow>
+    <TableRow>
+        <Button
+            android:onClick="actualizarLocal_Evaluacion"
+            android:text="@string/actualizar" />
+    </TableRow>
+    <TableRow>
+        <Button
+            android:onClick="limpiarTexto"
+            android:text="@string/limpiar" />
+    </TableRow>
+</TableLayout>

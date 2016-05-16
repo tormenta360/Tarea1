@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dip"
+    android:stretchColumns="1" >
+    <TableRow>
+        <TextView android:text="@string/numero_evaluacion"/>
+        <EditText
+            android:id="@+id/editNumero_Evaluacion"
+            android:inputType="number" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/numero_tema" />
+        <EditText
+            android:id="@+id/editNumero_Tema"
+            android:inputType="number"  />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/nombre_evaluacion" />
+        <EditText
+            android:id="@+id/editNombre_Evaluacion"
+            android:inputType="text"
+            android:maxLength="25" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/nota_global" />
+        <EditText
+            android:id="@+id/editNota_Global"
+            android:inputType="numberDecimal"
+            android:maxLength="4" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/opciones" />
+    </TableRow>
+    <TableRow>
+        <Button
+            android:onClick="insertarEvaluacion"
+            android:text="@string/insertar" />
+        <Button
+            android:onClick="limpiarTexto"
+            android:text="@string/limpiar" />
+    </TableRow>
+</TableLayout>

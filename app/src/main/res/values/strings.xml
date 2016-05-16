@@ -53,12 +53,37 @@
     <string name="tipo_defensa">Tipo de defensa</string>
     <string name="tipo_realizacion">Tipo de realizacion</string>
 
+
+    <string name="tittle_activity_evaluacion_menu">EvaluacionMenuActivity</string>
+    <string name="title_activity_detalle_evaluacion_menu">Detalle_EvaluacionMenuActivity</string>
+    <string name="title_activity_local_evaluacion_menu">Local_EvaluacionMenuActivity</string>
+    <string name="title_activity_evaluacion_insertar">EvaluacionInsertarActivity</string>
+    <string name="title_activity_evaluacion_eliminar">EvaluacionEliminarActivity</string>
+    <string name="title_activity_evaluacion_actualizar">EvaluacionActualizarActivity</string>
+    <string name="title_activity_evaluacion_consultar">EvaluacionConsultarActivity</string>
+    <string name="title_activity_detalle_evaluacion_insertar">Detalle_EvaluacionInsertarActivity</string>
+    <string name="title_activity_detalle_evaluacion_eliminar">Detalle_EvaluacionEliminarActivity</string>
+    <string name="title_activity_detalle_evaluacion_actualizar">Detalle_EvaluacionActualizarActivity</string>
+    <string name="title_activity_detalle_evaluacion_consultar">Detalle_EvaluacionConsultarActivity</string>
+    <string name="title_activity_local_evaluacion_insertar">Local_EvacluacionInsertarActivity</string>
+    <string name="title_activity_local_evaluacion_eliminar">Local_EvaluacionEliminarActivity</string>
+    <string name="title_activity_local_evaluacion_actualizar">Local_EvaluacionActualizarActivity</string>
+    <string name="title_activity_local_evaluacion_consultar">Local_EvaluacionConsultarActivity</string>
+    <string name="numero_evaluacion">Numero de la evaluación</string>
+    <string name="nombre_evaluacion">Nombre de la evaluacion</string>
+    <string name="nota_global">Nota global</string>
+    <string name="opciones">Opciones</string>
     <string name="limpiar">Limpiar</string>
     <string name="insertar">Insertar</string>
-    <string name="eliminar">Eliminar</string>
-    <string name="actualizar">Actualizar</string>
     <string name="consultar">Consultar</string>
-    <string name="opciones">Opciones:</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="carnet">Carnet</string>
+    <string name="codigo_local">Codigo Local</string>
+    <string name="nombre_local">Nombre Local</string>
+    <string name="disponible">Disponibilidad</string>
+    <string name="lugar">Lugar</string>
+
 
 
 </resources>

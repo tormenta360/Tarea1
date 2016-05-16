@@ -17,6 +17,9 @@ public class ControlBD {
     private static final String[]camposUsuario = new String [] {"idusuario","nomusuario","clave"};
     private static final String[] camposPropuestaPerfil = new String[] {"numero_tema", "codigo_grupo", "tema_perfil", "estado", "ano_propuesta"};
     private static final String[] camposTipoProyecto = new String[] {"numero_tema","nombre_tipo", "tipo_defensa", "tipo_realizacion"};
+    private static final String[]camposEvaluacion = new String[] {"numero_evaluacion", "numero_tema", "nombre_evaluacion", "nota_global"};
+    private static final String[]camposDetalle_Evaluacion = new String[] {"numero_evaluacion", "carnet"};
+    private static final String[]camposLocal_Evaluacion = new String[] {"codigo_local", "numero_evaluacion", "nombre_local", "disponible", "lugar"};
 
 
 
@@ -43,7 +46,7 @@ public class ControlBD {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            try{
+            try {
                 db.execSQL("CREATE TABLE docente(codigodocente VARCHAR(7) NOT NULL PRIMARY KEY, nombredocente VARCHAR(30),apellidodocente VARCHAR(30),tipocontrato VARCHAR(30),correo VARCHAR(50),telefono VARCHAR(30));");
                 db.execSQL("CREATE TABLE detalledocente(codigo VARCHAR(7) NOT NULL PRIMARY KEY,codigogrupo INTEGER,tiporol VARCHAR(30),nombredocente VARCHAR(30));");
                 db.execSQL("CREATE TABLE usuario(idusuario VARCHAR(2) NOT NULL PRIMARY KEY,nomusuario VARCHAR(30),clave VARCHAR(30));");
@@ -51,8 +54,9 @@ public class ControlBD {
                 db.execSQL("CREATE TABLE accesousuario(idopcion VARCHAR(3) NOT NULL,idusuario VARCHAR(2) NOT NULL,primary key(idopcion,idusuario)constraint fk_accesousuaio_usuario foreign key (idusuario) references usuario(idusuario) on delete restrict,constraint fk_accesousuario_opcioncrud foreign key (idopcion) references opcioncrud(idopcion) on delete restrict);");
                 db.execSQL("CREATE TABLE propuesta_perfil(numero_tema INTEGER NOT NULL PRIMARY KEY,codigo_grupo INTEGER NOT NULL,tema_perfil VARCHAR(30),estado VARCHAR(30),ano_propuesta INTEGER);");
                 db.execSQL("CREATE TABLE tipo_proyecto(numero_tema INTEGER NOT NULL PRIMARY KEY,nombre_tipo VARCHAR(20),tipo_defensa VARCHAR(20),tipo_realizacion VARCHAR(20));");
-
-
+                db.execSQL("CREATE TABLE evaluacion(numero_evaluacion INTEGER PRIMARY KEY NOT NULL,numero_tema INTEGER,nombre_evaluacion VARCHAR(25),nota_global REAL);");
+                db.execSQL("CREATE TABLE detalle_evaluacion(numero_evaluacion INTEGER PRIMARY KEY NOT NULL,carnet VARCHAR(7));");
+                db.execSQL("CREATE TABLE local_evaluacion(codigo_local INTEGER PRIMARY KEY NOT NULL,numero_evaluacion INTEGER,nombre_local VARCHAR(20),disponible VARCHAR(20),lugar VARCHAR(20));");
 
             }catch(SQLException e){
                 e.printStackTrace();
@@ -67,6 +71,204 @@ public class ControlBD {
 // TODO Auto-generated method stub
         }
     }
+
+    public String insertar(Evaluacion evaluacion){
+
+        String regInsertados = "Registro Insertado N°= ";
+        long contador = 0;
+
+        if (verificarIntegridad(evaluacion, 13)) {
+
+            ContentValues eval = new ContentValues();
+            eval.put("numero_evaluacion", evaluacion.getNumero_evaluacion());
+            eval.put("numero_tema", evaluacion.getNumero_tema());
+            eval.put("nombre_evaluacion", evaluacion.getNombre_evaluacion());
+            eval.put("nota_global", evaluacion.getNota_global());
+            contador = db.insert("evaluacion", null, eval);
+        }
+
+        if(contador==-1 || contador==0)
+        {
+            regInsertados = "Error al Insertar el registro.";
+        }
+        else {
+            regInsertados = regInsertados + contador;
+        }
+        return regInsertados;
+    }
+
+    public String insertar(Detalle_Evaluacion detalle_evaluacion){
+
+        String regInsertados = "Registro Insertado N°= ";
+        long contador = 0;
+
+        if (verificarIntegridad(detalle_evaluacion, 15)) {
+
+            ContentValues eval = new ContentValues();
+            eval.put("numero_evaluacion", detalle_evaluacion.getNumero_evaluacion());
+            eval.put("carnet", detalle_evaluacion.getCarnet());
+            contador = db.insert("detalle_evaluacion", null, eval);
+        }
+
+        if(contador==-1 || contador==0)
+        {
+            regInsertados = "Error al insertar el registro.";
+        }
+        else {
+            regInsertados = regInsertados + contador;
+        }
+        return regInsertados;
+    }
+
+    public String insertar(Local_Evaluacion local_evaluacion) {
+        String regInsertados = "Registro Insertado N°= ";
+        long contador = 0;
+
+        if (verificarIntegridad(local_evaluacion, 10)) {
+
+            ContentValues eval = new ContentValues();
+            eval.put("codigo_local", local_evaluacion.getCodigo_local());
+            eval.put("numero_evaluacion", local_evaluacion.getNumero_evaluacion());
+            eval.put("nombre_local", local_evaluacion.getNombre_local());
+            eval.put("disponible", local_evaluacion.getDisponible());
+            eval.put("lugar", local_evaluacion.getLugar());
+            contador = db.insert("local_evaluacion", null, eval);
+        }
+
+        if (contador == -1 || contador == 0) {
+            regInsertados = "Error al insertar el registro.";
+        } else {
+            regInsertados = regInsertados + contador;
+        }
+        return regInsertados;
+    }
+
+    public String actualizar(Evaluacion evaluacion) {
+        if (verificarIntegridad(evaluacion, 14)) {
+            String[] id = {String.valueOf(evaluacion.getNumero_evaluacion()), String.valueOf(evaluacion.getNumero_tema())};
+            ContentValues cv = new ContentValues();
+            cv.put("nombre_evaluacion", evaluacion.getNombre_evaluacion());
+            cv.put("nota_global", evaluacion.getNota_global());
+            db.update("evaluacion", cv, "numero_evaluacion = ? AND numero_tema = ?", id);
+            return "Registro Actualizado Correctamente";
+        }else{
+            return "Numero de evaluacion " + evaluacion.getNumero_evaluacion() + " no existe";
+        }
+    }
+
+    public String actualizar(Detalle_Evaluacion detalle_evaluacion){
+
+        if (verificarIntegridad(detalle_evaluacion, 16)) {
+            String[] id = {String.valueOf(detalle_evaluacion.getCarnet())};
+            ContentValues cv = new ContentValues();
+            cv.put("numero_evaluacion", detalle_evaluacion.getCarnet());
+            db.update("detalle_evaluacion", cv, "carnet = ?", id);
+            return "Registro Actualizado Correctamente";
+        }else{
+            return "Carnet " + detalle_evaluacion.getCarnet() + " no existe";
+        }
+    }
+
+    public String actualizar(Local_Evaluacion local_evaluacion) {
+
+        if (verificarIntegridad(local_evaluacion, 12)) {
+            String[] id = {String.valueOf(local_evaluacion.getCodigo_local()), String.valueOf(local_evaluacion.getNumero_evaluacion())};
+            ContentValues cv = new ContentValues();
+            cv.put("nombre_local", local_evaluacion.getNombre_local());
+            cv.put("disponible", local_evaluacion.getDisponible());
+            cv.put("lugar", local_evaluacion.getLugar());
+            db.update("local_evaluacion", cv, "codigo_local = ? AND numero_evaluacion = ?", id);
+            return "Registro Actualizado Correctamente";
+        } else {
+            return "No existe tabla evaluacion";
+        }
+    }
+
+    public String eliminar(Evaluacion evaluacion){
+        String regAfectados="filas afectadas= ";
+        int contador=0;
+        if(verificarIntegridad(evaluacion, 11)){
+            contador+=db.delete("local_evaluacion", "numero_evaluacion='"+evaluacion.getNumero_evaluacion()+"'", null);
+            contador+=db.delete("detalle_evaluacion", "numero_evaluacion='"+evaluacion.getNumero_evaluacion()+"'", null);
+        }
+        String where="numero_evaluacion='"+evaluacion.getNumero_evaluacion()+"'";
+        where="numero_evaluacion='"+evaluacion.getNumero_evaluacion()+"'";
+        contador+=db.delete("evaluacion", where, null);
+        regAfectados+=contador;
+        return regAfectados;
+    }
+
+    public String eliminar(Detalle_Evaluacion detalle_evaluacion){
+        String regAfectados="filas afectadas= ";
+        int contador=0;
+        String where="numero_evaluacion='"+detalle_evaluacion.getNumero_evaluacion()+"'";
+        where="carnet='"+detalle_evaluacion.getCarnet()+"'";
+        contador+=db.delete("detalle_evaluacion", where, null);
+        regAfectados+=contador;
+        return regAfectados;
+    }
+
+    public String eliminar(Local_Evaluacion local_evaluacion){
+        String regAfectados="filas afectadas= ";
+        int contador=0;
+        String where="codigo_local='"+local_evaluacion.getCodigo_local()+"'";
+        where="numero_evaluacion='"+local_evaluacion.getNumero_evaluacion()+"'";
+        contador+=db.delete("local_evaluacion", where, null);
+        regAfectados+=contador;
+        return regAfectados;
+    }
+
+    public Evaluacion consultarEvaluacion(int numero_evaluacion, int numero_tema){
+
+        String[] id = {Integer.toString(numero_evaluacion), Integer.toString(numero_tema)};
+        Cursor cursor = db.query("evaluacion", camposEvaluacion, "numero_evaluacion = ? AND numero_tema = ?", id, null, null, null);
+        if(cursor.moveToFirst()){
+
+            Evaluacion evaluacion = new Evaluacion();
+            evaluacion.setNumero_evaluacion(cursor.getInt(0));
+            evaluacion.setNumero_tema(cursor.getInt(1));
+            evaluacion.setNombre_evaluacion(cursor.getString(2));
+            evaluacion.setNota_global(cursor.getFloat(3));
+            return evaluacion;
+        }else{
+            return null;
+        }
+    }
+
+    public Detalle_Evaluacion consultarDetalle_Evaluacion(String carnet){
+
+        String[] id = {carnet};
+        Cursor cursor = db.query("detalle_evaluacion", camposDetalle_Evaluacion, "carnet = ?", id, null, null, null);
+        if(cursor.moveToFirst()){
+
+            Detalle_Evaluacion detalle_evaluacion = new Detalle_Evaluacion();
+            detalle_evaluacion.setNumero_evaluacion(cursor.getInt(0));
+            detalle_evaluacion.setCarnet(cursor.getString(1));
+            return detalle_evaluacion;
+        }else{
+            return null;
+        }
+    }
+
+    public Local_Evaluacion consultarLocal_Evaluacion(int codigo_local, int numero_evaluacion){
+
+        String[] id = {Integer.toString(codigo_local), Integer.toString(numero_evaluacion)};
+        Cursor cursor = db.query("local_evaluacion", camposLocal_Evaluacion, "codigo_local = ? AND numero_evaluacion = ?", id, null, null, null);
+        if(cursor.moveToFirst()){
+
+            Local_Evaluacion local_evaluacion = new Local_Evaluacion();
+            local_evaluacion.setCodigo_local(cursor.getInt(0));
+            local_evaluacion.setNumero_evaluacion(cursor.getInt(1));
+            local_evaluacion.setNombre_local(cursor.getString(2));
+            local_evaluacion.setDisponible(cursor.getString(3));
+            local_evaluacion.setLugar(cursor.getString(4));
+            return local_evaluacion;
+        }else{
+            return null;
+        }
+    }
+
+
 
     public String insertar(PropuestaPerfil propuestaPerfil) {
 
@@ -612,6 +814,91 @@ public class ControlBD {
                 return false;
             }
 
+            case 10: {
+                //verificar que al insertar_local_evaluacion exista numero_evaluacion
+                Local_Evaluacion local_evaluacion = (Local_Evaluacion) dato;
+                String[] idlocalins = {String.valueOf(local_evaluacion.getNumero_evaluacion())};
+                abrir();
+                Cursor curlocal1 = db.query("evaluacion", null, "numero_evaluacion = ?", idlocalins, null, null, null);
+                if (curlocal1.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
+            case 11: {
+                //Eliminar evaluacion y local_evaluacion//Eliminar evaluacion y local_evaluacion
+                Evaluacion evaluacion = (Evaluacion) dato;
+                Cursor curlocal2 = db.query(true, "local_evaluacion", new String[]{"numero_evaluacion"}, "numero_evaluacion='" + evaluacion.getNumero_evaluacion() + "'", null, null, null, null, null);
+                Cursor curlocal3 = db.query(true, "detalle_evaluacion", new String[]{"numero_evaluacion"}, "numero_evaluacion='" + evaluacion.getNumero_evaluacion() + "'", null, null, null, null, null);
+                if (curlocal2.moveToFirst() && curlocal3.moveToFirst())
+                    return true;
+                else
+                    return false;
+            }
+            case 12: {
+                //verificar que al modificar local_evaluacion exista codigo_local, numero_evaluacion
+                Local_Evaluacion local_evaluacion1 = (Local_Evaluacion) dato;
+                String[] idlocalmod = {String.valueOf(local_evaluacion1.getCodigo_local()), String.valueOf(local_evaluacion1.getNumero_evaluacion())};
+                abrir();
+                Cursor curlocal2 = db.query("local_evaluacion", null, "codigo_local = ? AND numero_evaluacion =?", idlocalmod, null, null, null);
+                if (curlocal2.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
+            case 13: {
+                //verificar que al insertar evaluacion exista numero_tema
+                Evaluacion evaluacion = (Evaluacion) dato;
+                String[] idevaluacion = {String.valueOf(evaluacion.getNumero_tema())};
+                abrir();
+                Cursor cureval1 = db.query("propuesta_perfil", null, "numero_tema = ?", idevaluacion, null, null, null);
+                if (cureval1.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
+            //Verificar que al modificar evaluacion exista numero_evaluacion y numero_tema
+            case 14: {
+                Evaluacion evaluacion1 = (Evaluacion) dato;
+                String[] idevalmod = {String.valueOf(evaluacion1.getNumero_evaluacion()), String.valueOf(evaluacion1.getNumero_tema())};
+                abrir();
+                Cursor cureval2 = db.query("evaluacion", null, "numero_evaluacion = ? AND numero_tema = ?", idevalmod, null, null, null);
+                if (cureval2.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
+            case 15: {
+                //verificar que al insertar_detalle_evaluacion exista numero_evaluacion y carnet
+                Detalle_Evaluacion detalle_evaluacion = (Detalle_Evaluacion)dato;
+                String[] iddetalle = {String.valueOf(detalle_evaluacion.getNumero_evaluacion())};
+                String[] iddetalle1 = {detalle_evaluacion.getCarnet()};
+                abrir();
+                Cursor curdeta1 = db.query("evaluacion", null, "numero_evaluacion = ?", iddetalle, null, null, null);
+                Cursor curdeta2 = db.query("estudiante", null, "carnet = ?", iddetalle1, null, null, null);
+                if (curdeta1.moveToFirst() && curdeta2.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
+            case 16:{
+                //verificar que al modificar detalle_evaluacion numero_evaluacion y carnet
+                Detalle_Evaluacion detalle_evaluacion1 = (Detalle_Evaluacion)dato;
+                String[] iddetamod = {String.valueOf(detalle_evaluacion1.getNumero_evaluacion()), detalle_evaluacion1.getCarnet()};
+                abrir();
+                Cursor curdeta3 = db.query("detalle_evaluacion", null, "numero_evaluacion = ? AND carnet =?", iddetamod, null, null, null);
+                if (curdeta3.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
+
 
             default:
                 return false;
@@ -642,6 +929,22 @@ public class ControlBD {
         final String[] VTtipo_defensa = {"Demostracion", "Exposicion", "Demostracion", "Demostracion"};
         final String[] VTtipo_realizacion = {"Demostrar", "Hablar", "Demostrar", "Demostrar"};
 
+        final int[]VEnumero_evaluacion = {1, 2, 3, 4, 5, 6};
+        final int[]VEnumero_tema = {1, 2, 3, 4, 5, 6};
+        final String[]VEnombre_evaluacion = {"Primera","Segunda","Tercera","Cuarta","Quinta","Sexta"};
+        final double[]VEnota_global = {9.0,9.5,8.33,8.00,6.56,10.0};
+
+        //Detalle_Evaluacion
+        final int[]VDnumero_evaluacion = {1,2,3,4};
+        final String[]VDcarnet = {"AA11011","BB12012","CC13013","EE14014"};
+
+        //Local_Evaluacion
+        final int[]VLcodigo_local = {301,21,22,33};
+        final int[]VLnumero_evaluacion = {1,2,3,4};
+        final String[]VLnombre_local = {"Primera Planta","Segunda Planta","Tercera Planta","Edificio Compartido"};
+        final String[]VLdisponible = {"Disponible", "No disponible", "No disponible", "Disponible"};
+        final String[]VLlugar = {"Facultad de Ingenieria","Facultad de Economia","Falcutad de Odontologia","Facultad de Agronomia"};
+
 
         final String[] VUidUsuario = {"00","01","02"};
         final String[] VUnomUsuario = {"admin","consultor","otro"};
@@ -649,12 +952,12 @@ public class ControlBD {
 
         final String[] VOidOpcion = {"000","001","002","003","004",
                 "010","011","012","013","014",
-                /*"020","021","022","023","024",
+                "020","021","022","023","024",
                 "030","031","032","033","034",
                 "040","041","042","043","044",
                 "050","051","052","053","054",
                 "060","061","062","063","064",
-                "070","071","072","073","074",
+                /*"070","071","072","073","074",
                 "080","081","082","083","084",
                 "090","091","092","093","094",
                 "100","101","102","103","104"*/};
@@ -663,10 +966,10 @@ public class ControlBD {
                 "Menu Detalle Docente","Ingresar Detalle Docente","Eliminar Detalle Docente","Actualizar Detalle Docente","Consultar Detalle Docente",
                 "Tabla Propuesta Perfil","Insertar Registro","Eliminar Registro","Consultar Registro","Actualizar Registro",
                 "Tabla Tipo Proyecto","Insertar Registro","Eliminar Registro","Consultar Registro","Actualizar Registro",
-                /*"Menu Especialización","Ingresar Especialización","Eliminar Especialización","Actualizar Especialización","Consultar Especialización",
-                "Menu Experiencia Laboral","Ingresar Experiencia","Eliminar Experiencia","Actualizar Experiencia","Consultar Experiencia",
-                "Menu Grados Académicos","Ingresar Grado Académico","Eliminar Grado Académico","Actualizar Grado Académico","Consulta Grado Académico",
-                "Menu de Institución","Ingresar Institución","Eliminar Institución","Actualizar Institucion","Consultar Institución",
+                "Tabla Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
+                "Tabla Detalle Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
+                "Tabla Local Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
+                /*"Menu de Institución","Ingresar Institución","Eliminar Institución","Actualizar Institucion","Consultar Institución",
                 "Menu Materia","Ingresar Materia","Eliminar Materia","Actualizar Materia","Consultar Materia",
                 "Menu Materias Impartidas","Ingresar Materia Impartida","Eliminar Materia Impartida","Actualizar Materia Impartida","Consultar Materia Impartida",
                 "Menu Tipo de Contratación","Ingresar Tipo","Eliminar Tipo","Actualizar Tipo","Consultar Tipo"*/};
@@ -675,10 +978,10 @@ public class ControlBD {
                 0,1,2,3,4,
                 0,1,2,3,4,
                 0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,
                 /*0,1,2,3,4,
-                0,1,2,3,4,
-                0,1,2,3,4,
-                0,1,2,3,4,
                 0,1,2,3,4,
                 0,1,2,3,4,*/
                 /*0/*,1,2,3,4*/};
@@ -687,10 +990,10 @@ public class ControlBD {
                 "00","00","00","00","00",
                 "00","00","00","00","00",
                 "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
                 /*"00","00","00","00","00",
-                "00","00","00","00","00",
-                "00","00","00","00","00",
-                "00","00","00","00","00",
                 "00","00","00","00","00",
                 "00","00","00","00","00",
                 "00","00","00","00","00",*/
@@ -703,10 +1006,10 @@ public class ControlBD {
                 "010","011","012","013","014",
                 "020","021","022","023","024",
                 "030","031","032","033","034",
-                /*"040","041","042","043","044",
+                "040","041","042","043","044",
                 "050","051","052","053","054",
                 "060","061","062","063","064",
-                "070","071","072","073","074",
+                /*"070","071","072","073","074",
                 "080","081","082","083","084",
                 "090","091","092","093","094",
                 "100","101","102","103","104"*,*/
@@ -726,6 +1029,9 @@ public class ControlBD {
         db.execSQL("DELETE FROM accesousuario");
         db.execSQL("DELETE FROM propuesta_perfil");
         db.execSQL("DELETE FROM tipo_proyecto");
+        db.execSQL("DELETE FROM evaluacion");
+        db.execSQL("DELETE FROM detalle_evaluacion");
+        db.execSQL("DELETE FROM local_evaluacion");
 
 
         Docente docente = new Docente();
@@ -792,6 +1098,34 @@ public class ControlBD {
             tipoProyecto.setTipo_defensa(VTtipo_defensa[i]);
             tipoProyecto.setTipo_realizacion(VTtipo_realizacion[i]);
             insertar(tipoProyecto);
+        }
+
+        Evaluacion evaluacion = new Evaluacion();
+        for(int i=0; i<6; i++)
+        {
+            evaluacion.setNumero_evaluacion(VEnumero_evaluacion[i]);
+            evaluacion.setNumero_tema(VEnumero_tema[i]);
+            evaluacion.setNombre_evaluacion(VEnombre_evaluacion[i]);
+            evaluacion.setNota_global(VEnota_global[i]);
+            insertar(evaluacion);
+        }
+
+        Local_Evaluacion local_evaluacion = new Local_Evaluacion();
+        for(int i=0; i<4; i++)
+        {
+            local_evaluacion.setCodigo_local(VLcodigo_local[i]);
+            local_evaluacion.setNumero_evaluacion(VLnumero_evaluacion[i]);
+            local_evaluacion.setNombre_local(VLnombre_local[i]);
+            local_evaluacion.setDisponible(VLdisponible[i]);
+            local_evaluacion.setLugar(VLlugar[i]);
+            insertar(local_evaluacion);
+        }
+
+        Detalle_Evaluacion detalle_evaluacion = new Detalle_Evaluacion();
+        for(int i=0;i<4;i++) {
+            detalle_evaluacion.setNumero_evaluacion(VDnumero_evaluacion[i]);
+            detalle_evaluacion.setCarnet(VDcarnet[i]);
+            insertar(detalle_evaluacion);
         }
 
 
