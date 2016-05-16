@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1"
+    android:paddingTop="4dip"
+    >
+
+    <TableRow >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/numero_tema"/>
+        <EditText
+            android:id="@+id/editNumero_tema"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+    </TableRow>
+
+    <TableRow >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/codigo_grupo"/>
+        <EditText
+            android:id="@+id/editCodigo_grupo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+    </TableRow>
+
+
+    <TableRow>
+        <Button
+            android:layout_width="wrap_content"
+            android:text="@string/eliminar"
+            android:onClick="eliminarPropuesta_Perfil"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:text="@string/limpiar"
+            android:onClick="limpiar"/>
+    </TableRow>
+
+</TableLayout>

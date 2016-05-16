@@ -12,9 +12,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class ControlBD {
 
-    private static final String[]camposDocente = new String [] {"codigodocente","nombredocente","apellidodocente","escuela"};
+    private static final String[]camposDocente = new String [] {"codigodocente","nombredocente","apellidodocente","tipocontrato,correo,telefono"};
     private static final String[]camposDetalleDocente = new String [] {"codigo","codigogrupo","tiporol","nombredocente"};
     private static final String[]camposUsuario = new String [] {"idusuario","nomusuario","clave"};
+    private static final String[] camposPropuestaPerfil = new String[] {"numero_tema", "codigo_grupo", "tema_perfil", "estado", "ano_propuesta"};
+    private static final String[] camposTipoProyecto = new String[] {"numero_tema","nombre_tipo", "tipo_defensa", "tipo_realizacion"};
+
 
 
     private final Context context;
@@ -29,6 +32,179 @@ public class ControlBD {
     }
 
 
+    private static class DatabaseHelper extends SQLiteOpenHelper {
+
+        private static final String BASE_DATOS = "proyecto1.s3db";
+        private static final int VERSION = 1;
+
+        public DatabaseHelper(Context context) {
+            super(context, BASE_DATOS, null, VERSION);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            try{
+                db.execSQL("CREATE TABLE docente(codigodocente VARCHAR(7) NOT NULL PRIMARY KEY, nombredocente VARCHAR(30),apellidodocente VARCHAR(30),tipocontrato VARCHAR(30),correo VARCHAR(50),telefono VARCHAR(30));");
+                db.execSQL("CREATE TABLE detalledocente(codigo VARCHAR(7) NOT NULL PRIMARY KEY,codigogrupo INTEGER,tiporol VARCHAR(30),nombredocente VARCHAR(30));");
+                db.execSQL("CREATE TABLE usuario(idusuario VARCHAR(2) NOT NULL PRIMARY KEY,nomusuario VARCHAR(30),clave VARCHAR(30));");
+                db.execSQL("CREATE TABLE opcioncrud(idopcion VARCHAR(3) NOT NULL PRIMARY KEY,desopcion VARCHAR2(30),numcrud INTEGER);");
+                db.execSQL("CREATE TABLE accesousuario(idopcion VARCHAR(3) NOT NULL,idusuario VARCHAR(2) NOT NULL,primary key(idopcion,idusuario)constraint fk_accesousuaio_usuario foreign key (idusuario) references usuario(idusuario) on delete restrict,constraint fk_accesousuario_opcioncrud foreign key (idopcion) references opcioncrud(idopcion) on delete restrict);");
+                db.execSQL("CREATE TABLE propuesta_perfil(numero_tema INTEGER NOT NULL PRIMARY KEY,codigo_grupo INTEGER NOT NULL,tema_perfil VARCHAR(30),estado VARCHAR(30),ano_propuesta INTEGER);");
+                db.execSQL("CREATE TABLE tipo_proyecto(numero_tema INTEGER NOT NULL PRIMARY KEY,nombre_tipo VARCHAR(20),tipo_defensa VARCHAR(20),tipo_realizacion VARCHAR(20));");
+
+
+
+            }catch(SQLException e){
+                e.printStackTrace();
+
+            }
+
+        }
+
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+// TODO Auto-generated method stub
+        }
+    }
+
+    public String insertar(PropuestaPerfil propuestaPerfil) {
+
+        String regInsertados = "Registro Insertado Nº= ";
+        long contador = 0;
+
+        if(verificarIntegridad(propuestaPerfil,5)) {
+            ContentValues proper = new ContentValues();
+            proper.put("numero_tema", propuestaPerfil.getNumero_tema());
+            proper.put("codigo_grupo", propuestaPerfil.getCodigo_grupo());
+            proper.put("tema_perfil", propuestaPerfil.getTema_perfil());
+            proper.put("estado", propuestaPerfil.getEstado());
+            proper.put("ano_propuesta", propuestaPerfil.getAno_propuesta());
+            contador = db.insert("propuesta_perfil", null, proper);
+        }
+
+        if (contador == -1 || contador == 0) {
+            regInsertados = "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
+        } else {
+            regInsertados = regInsertados + contador;
+        }
+        return regInsertados;
+    }
+
+    public String insertar(TipoProyecto tipoProyecto) {
+
+        String regInsertados="Registro Insertado Nº= ";
+        long contador=0;
+        if(verificarIntegridad(tipoProyecto,8)){
+            ContentValues tipro = new ContentValues();
+            tipro.put("numero_tema", tipoProyecto.getNumero_tema());
+            tipro.put("nombre_tipo", tipoProyecto.getNombre_tipo());
+            tipro.put("tipo_defensa", tipoProyecto.getTipo_defensa());
+            tipro.put("tipo_realizacion", tipoProyecto.getTipo_realizacion());
+            contador=db.insert("tipo_proyecto", null, tipro);
+        }
+        if(contador==-1 || contador==0)
+        {
+            regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
+        }
+        else {
+            regInsertados=regInsertados+contador;
+        }
+
+        return regInsertados;
+    }
+
+
+    public String actualizar(PropuestaPerfil propuestaPerfil) {
+
+        if(verificarIntegridad(propuestaPerfil, 6)){
+            String[] id = {String.valueOf(propuestaPerfil.getNumero_tema()),String.valueOf(propuestaPerfil.getCodigo_grupo())};
+            ContentValues cv = new ContentValues();
+            cv.put("tema_perfil", propuestaPerfil.getTema_perfil());
+            cv.put("estado", propuestaPerfil.getEstado());
+            cv.put("ano_propuesta", propuestaPerfil.getAno_propuesta());
+            db.update("propuesta_perfil", cv, "numero_tema = ? AND codigo_grupo =?", id);
+            return "Registro Actualizado Correctamente";
+        }else{
+            return "Registro no Existe";
+        }
+    }
+
+    public String actualizar(TipoProyecto tipoProyecto) {
+
+        if(verificarIntegridad(tipoProyecto, 9)){
+            String[] id = {String.valueOf(tipoProyecto.getNumero_tema())};
+            ContentValues cv = new ContentValues();
+            cv.put("nombre_tipo", tipoProyecto.getNombre_tipo());
+            cv.put("tipo_defensa", tipoProyecto.getTipo_defensa());
+            cv.put("tipo_realizacion", tipoProyecto.getTipo_realizacion());
+            db.update("tipo_proyecto", cv, "numero_tema = ?", id);
+            return "Registro Actualizado Correctamente";
+        }else{
+            return "Registro no Existe";
+        }
+    }
+
+    public String eliminar(PropuestaPerfil propuestaPerfil)
+    {
+        String regAfectados="filas afectadas= ";
+        int contador=0;
+        if(verificarIntegridad(propuestaPerfil, 7)){
+            contador+=db.delete("tipo_proyecto", "numero_tema='"+propuestaPerfil.getNumero_tema()+"'", null);
+            contador+=db.delete("evaluacion", "numero_tema='"+propuestaPerfil.getNumero_tema()+"'", null);
+        }
+        String where="numero_tema='"+propuestaPerfil.getNumero_tema()+"'";
+        where=where+" AND codigo_grupo='"+propuestaPerfil.getCodigo_grupo()+"'";
+        contador+=db.delete("propuesta_perfil", where, null);
+        regAfectados+=contador;
+        return regAfectados;
+    }
+
+    public String eliminar(TipoProyecto tipoProyecto) {
+        String regAfectados="filas afectadas= ";
+        int contador=0;
+        String where="numero_tema='"+tipoProyecto.getNumero_tema()+"'";
+        contador+=db.delete("tipo_proyecto", where, null);
+        regAfectados+=contador;
+        return regAfectados;
+    }
+
+    public PropuestaPerfil consultarPropuestaPerfil(int numero_tema, int codigo_grupo) {
+
+        String[] id = {String.valueOf(numero_tema),String.valueOf(codigo_grupo)};
+        Cursor cursor = db.query("propuesta_perfil", camposPropuestaPerfil, "numero_tema = ? AND codigo_grupo =?", id, null, null, null);
+        if(cursor.moveToFirst()){
+            PropuestaPerfil propuestaPerfil = new PropuestaPerfil();
+            propuestaPerfil.setNumero_tema(cursor.getInt(0));
+            propuestaPerfil.setCodigo_grupo(cursor.getInt(1));
+            propuestaPerfil.setTema_perfil(cursor.getString(2));
+            propuestaPerfil.setEstado(cursor.getString(3));
+            propuestaPerfil.setAno_propuesta(cursor.getInt(4));
+            return propuestaPerfil;
+        }else{
+            return null;
+        }
+    }
+
+    public TipoProyecto consultarTipoProyecto(int numero_tema) {
+
+        String[] id = {String.valueOf(numero_tema)};
+        Cursor cursor = db.query("tipo_proyecto", camposTipoProyecto, "numero_tema = ?", id, null, null, null);
+        if(cursor.moveToFirst()){
+            TipoProyecto tipoProyecto = new TipoProyecto();
+            tipoProyecto.setNumero_tema(cursor.getInt(0));
+            tipoProyecto.setNombre_tipo(cursor.getString(1));
+            tipoProyecto.setTipo_defensa(cursor.getString(2));
+            tipoProyecto.setTipo_realizacion(cursor.getString(3));
+            return tipoProyecto;
+        }else{
+            return null;
+        }
+    }
+
+
+
+
 
     public Docente consultarDocente(String codigo) {
         String[] id = {codigo};
@@ -39,7 +215,11 @@ public class ControlBD {
             docente.setCodigoDocente(cursor.getString(0));
             docente.setNombreDocente(cursor.getString(1));
             docente.setApellidoDocente(cursor.getString(2));
-            docente.setEscuela(cursor.getString(3));
+            docente.setTipoContrato(cursor.getString(3));
+            docente.setCorreo(cursor.getString(4));
+            docente.setTelefono(cursor.getString(5));
+
+
             return docente;
         }else{
             return null;
@@ -54,7 +234,11 @@ public class ControlBD {
             ContentValues cv = new ContentValues();
             cv.put("nombredocente", docente.getNombreDocente());
             cv.put("apellidodocente", docente.getApellidoDocente());
-            cv.put("escuela", docente.getEscuela());
+            cv.put("tipocontrato", docente.getTipoContrato());
+            cv.put("correo", docente.getCorreo());
+            cv.put("telefono", docente.getTelefono());
+
+
             db.update("docente", cv, "codigodocente = ?", id);
             return "Registro Actualizado Correctamente";
         }else{
@@ -79,6 +263,7 @@ public class ControlBD {
         String regAfectados="filas afectadas= ";
         int contador=0;
         contador+=db.delete("detalledocente", "codigo='"+detalleDocente.getCodigoDocente()+"'", null);
+        contador+=db.delete("grupo", "codigo_grupo='"+detalleDocente.getCodigoGrupo()+"'", null);
         regAfectados+=contador;
         return regAfectados;
 
@@ -161,40 +346,7 @@ public class ControlBD {
     }
 
 
-    private static class DatabaseHelper extends SQLiteOpenHelper {
 
-        private static final String BASE_DATOS = "consazon.s3db";
-        private static final int VERSION = 1;
-
-        public DatabaseHelper(Context context) {
-            super(context, BASE_DATOS, null, VERSION);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            try{
-                db.execSQL("CREATE TABLE docente(codigodocente VARCHAR(7) NOT NULL PRIMARY KEY, nombredocente VARCHAR(30),apellidodocente VARCHAR(30),escuela VARCHAR(30));");
-                db.execSQL("CREATE TABLE detalledocente(codigo VARCHAR(7) NOT NULL PRIMARY KEY,codigogrupo INTEGER,tiporol VARCHAR(30),nombredocente VARCHAR(30));");
-                db.execSQL("CREATE TABLE usuario(idusuario VARCHAR(2) NOT NULL PRIMARY KEY,nomusuario VARCHAR(30),clave VARCHAR(30));");
-                db.execSQL("CREATE TABLE opcioncrud(idopcion VARCHAR(3) NOT NULL PRIMARY KEY,desopcion VARCHAR2(30),numcrud INTEGER);");
-                db.execSQL("CREATE TABLE accesousuario(idopcion VARCHAR(3) NOT NULL,idusuario VARCHAR(2) NOT NULL,primary key(idopcion,idusuario)constraint fk_accesousuaio_usuario foreign key (idusuario) references usuario(idusuario) on delete restrict,constraint fk_accesousuario_opcioncrud foreign key (idopcion) references opcioncrud(idopcion) on delete restrict);");
-
-
-
-
-            }catch(SQLException e){
-                e.printStackTrace();
-
-            }
-
-        }
-
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-// TODO Auto-generated method stub
-        }
-    }
 
     public void abrir() throws SQLException{
         db = DBHelper.getWritableDatabase();
@@ -219,7 +371,11 @@ public class ControlBD {
             doc.put("codigodocente", docente.getCodigoDocente());
             doc.put("nombredocente", docente.getNombreDocente());
             doc.put("apellidodocente", docente.getApellidoDocente());
-            doc.put("escuela", docente.getEscuela());
+            doc.put("tipocontrato", docente.getTipoContrato());
+            doc.put("correo", docente.getCorreo());
+            doc.put("telefono", docente.getTelefono());
+
+
             contador=db.insert("docente", null, doc);
             regInsertados=regInsertados+contador;
 
@@ -297,6 +453,40 @@ public class ControlBD {
 
 
 
+
+
+    public Cursor obtenerMenuUsuario(String id){
+        String sql = "select oc.desopcion, oc.numcrud from usuario u "+
+                "join accesousuario au on u.idusuario = au.idusuario and u.idusuario='"+id+"'\n" +
+                "join opcioncrud oc on au.idopcion = oc.idopcion and oc.numcrud='0'";
+        abrir();
+        return db.rawQuery(sql, null);
+    }
+
+    public Cursor obtenerSubMenu(String id, String idOpcion){
+        String sql = "select oc.desopcion, oc.numcrud from usuario u "+
+                "join accesousuario au on u.idusuario = au.idusuario and u.idusuario='"+id+"'\n" +
+                "join opcioncrud oc on au.idopcion = oc.idopcion and oc.numcrud!='0' and au.idopcion like '"+idOpcion+"'";
+        abrir();
+        return db.rawQuery(sql, null);
+    }
+
+    public Usuario consultarId(String nomusuario) {
+        String[] id = {nomusuario};
+
+        Cursor cursor = db.query("usuario", camposUsuario, "nomusuario = ?", id, null, null, null);
+        if(cursor.moveToFirst()){
+            Usuario detalledocente = new Usuario();
+            detalledocente.setIdusuario(cursor.getString(0));
+            detalledocente.setNomusuario(cursor.getString(1));
+            detalledocente.setClave(cursor.getString(2));
+
+            return detalledocente;
+        }else{
+            return null;
+        }
+    }
+
     private boolean verificarIntegridad(Object dato, int relacion) throws SQLException{
 
         switch(relacion){
@@ -359,25 +549,98 @@ public class ControlBD {
             }
 
 
+            case 5: {
+                //verificar que al propuesta_perfil exista numero_grupo
+                PropuestaPerfil propuestaPerfil = (PropuestaPerfil) dato;
+                String[] idprop = {String.valueOf(propuestaPerfil.getCodigo_grupo())};
+                abrir();
+                Cursor curprop = db.query("grupo", null, "codigo_grupo = ?", idprop, null, null, null);
+                if (curprop.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
 
+            case 6: {
+                //verificar que al modificar propuesta_perfil exista numero_tema, codigo_grupo
+                PropuestaPerfil propuestaPerfil1 = (PropuestaPerfil) dato;
+                String[] idpropmod = {String.valueOf(propuestaPerfil1.getNumero_tema()), String.valueOf(propuestaPerfil1.getCodigo_grupo())};
+                abrir();
+                Cursor curprop12 = db.query("propuesta_perfil", null, "numero_tema = ? AND codigo_grupo =?", idpropmod, null, null, null);
+                if (curprop12.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
 
+            case 7: {
+                //Eliminar evaluacion y local_evaluacion//Eliminar evaluacion y local_evaluacion
+                PropuestaPerfil propuestaPerfil2 = (PropuestaPerfil) dato;
+                Cursor curpropl3 = db.query(true, "tipo_proyecto", new String[]{"numero_tema"}, "numero_tema='" + propuestaPerfil2.getNumero_tema() + "'", null, null, null, null, null);
+                Cursor curpropl4 = db.query(true, "evaluacion", new String[]{"numero_tema"}, "numero_tema='" + propuestaPerfil2.getNumero_tema() + "'", null, null, null, null, null);
+                if (curpropl3.moveToFirst() && curpropl4.moveToFirst())
+                    return true;
+                else
+                    return false;
+            }
+
+            case 8: {
+                //verificar que al insertar_tipo_proyecto exista numero_tema
+                TipoProyecto tipoProyecto = (TipoProyecto) dato;
+                String[] idtipo = {String.valueOf(tipoProyecto.getNumero_tema())};
+                abrir();
+                Cursor curtipo1 = db.query("propuesta_perfil", null, "numero_tema = ?", idtipo, null, null, null);
+                if (curtipo1.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
+
+            case 9: {
+                //verificar que al modificar tipo_proyecto exista numero_tema
+                TipoProyecto tipoProyecto2 = (TipoProyecto) dato;
+                String[] idtipo2 = {String.valueOf(tipoProyecto2.getNumero_tema())};
+                abrir();
+                Cursor curtipo12 = db.query("tipo_proyecto", null, "numero_tema = ?", idtipo2, null, null, null);
+                if (curtipo12.moveToFirst()) {
+                    //Se encontraron datos
+                    return true;
+                }
+                return false;
+            }
 
 
             default:
                 return false;
-
-
         }
+
     }
+
 
     public String llenarBD(){
 
         final String[] VDcodigo = {"LV10022","SC12054"};
         final String[] VDnombre = {"Walter","Cristian"};
         final String[] VDapellido = {"Lemus","Sosa"};
-        final String[] VDescuela = {"Sistemas","Quimica"};
         final int[] VDcodigogrupo = {01,02};
         final String[] VDtiporol = {"Jurado","Docente"};
+        final String[] VDtipoContrato={"Ley de Salario","Contrato"};
+        final String[] VDcorreo={"lv10022@ues.edu.sv","sc12054@ues.edu.sv"};
+        final String[] VDtelefono={"22250001","22250002"};
+
+        final int[] VPnumero_tema = {1, 2, 3, 4};
+        final int[] VPcodigo_grupo = {1, 2, 3, 4};
+        final String[] VPtema_perfil = {"Sistema Bienestar", "Investigacion ecnologia", "Sistema de inventario", "Sistema contable"};
+        final String[] VPestado = {"Aprobado", "No Aprobado","Aprobado", "No Aprobado"};
+        final int[] VPano_propuesta = {1992, 1993, 1997, 2005};
+
+        final int[] VTnumero_tema = {1, 2, 3, 4};
+        final String[] VTnombre_tipo = {"Sistema Informatico", "Investigacion", "Sistema Informatico", "Investigacion"};
+        final String[] VTtipo_defensa = {"Demostracion", "Exposicion", "Demostracion", "Demostracion"};
+        final String[] VTtipo_realizacion = {"Demostrar", "Hablar", "Demostrar", "Demostrar"};
 
 
         final String[] VUidUsuario = {"00","01","02"};
@@ -397,10 +660,10 @@ public class ControlBD {
                 "100","101","102","103","104"*/};
 
         final String[] VOdesOpcion = {"Menu Docente","Ingresar Docente","Eliminar Docente","Actualizar Docente","Consultar Docente",
-                "Menu Detalle Docente","Ingresar Detalle Docente","Eliminar Detalle Docente","Actualizar Detalle Docente","Consultar Detalle Docente"//,
-                /*"Menu Docente","Ingresar Docente","Eliminar Docente","Actualizar Docente","Consultar Docente",
-                "Menu Empresa","Ingresar Empresa","Eliminar Empresa","Actualizar Empresa","Consultar Empresa",
-                "Menu Especialización","Ingresar Especialización","Eliminar Especialización","Actualizar Especialización","Consultar Especialización",
+                "Menu Detalle Docente","Ingresar Detalle Docente","Eliminar Detalle Docente","Actualizar Detalle Docente","Consultar Detalle Docente",
+                "Tabla Propuesta Perfil","Insertar Registro","Eliminar Registro","Consultar Registro","Actualizar Registro",
+                "Tabla Tipo Proyecto","Insertar Registro","Eliminar Registro","Consultar Registro","Actualizar Registro",
+                /*"Menu Especialización","Ingresar Especialización","Eliminar Especialización","Actualizar Especialización","Consultar Especialización",
                 "Menu Experiencia Laboral","Ingresar Experiencia","Eliminar Experiencia","Actualizar Experiencia","Consultar Experiencia",
                 "Menu Grados Académicos","Ingresar Grado Académico","Eliminar Grado Académico","Actualizar Grado Académico","Consulta Grado Académico",
                 "Menu de Institución","Ingresar Institución","Eliminar Institución","Actualizar Institucion","Consultar Institución",
@@ -409,10 +672,10 @@ public class ControlBD {
                 "Menu Tipo de Contratación","Ingresar Tipo","Eliminar Tipo","Actualizar Tipo","Consultar Tipo"*/};
 
         final int[] VOnumCrud = {0,1,2,3,4,
-                0,1,2,3,4//,
+                0,1,2,3,4,
+                0,1,2,3,4,
+                0,1,2,3,4,
                 /*0,1,2,3,4,
-                0,1,2,3,4,
-                0,1,2,3,4,
                 0,1,2,3,4,
                 0,1,2,3,4,
                 0,1,2,3,4,
@@ -422,9 +685,9 @@ public class ControlBD {
 
         final String[] VAidUsuario = {"00","00","00","00","00",
                 "00","00","00","00","00",
+                "00","00","00","00","00",
+                "00","00","00","00","00",
                 /*"00","00","00","00","00",
-                "00","00","00","00","00",
-                "00","00","00","00","00",
                 "00","00","00","00","00",
                 "00","00","00","00","00",
                 "00","00","00","00","00",
@@ -433,24 +696,24 @@ public class ControlBD {
                 "00","00","00","00","00",*/
                 "01","01","01","01","01",
                 "01","01","01","01","01",
-                /*"01","01","01","01","01",
                 "01","01","01","01","01",
+                /*"01","01","01","01","01",
                 "01","01",*/"02","02"};
         final String[] VAidOpcion = {"000","001","002","003","004",
-                "010","011","012","013","014"//,
-               /* "020","021","022","023","024",
+                "010","011","012","013","014",
+                "020","021","022","023","024",
                 "030","031","032","033","034",
-                "040","041","042","043","044",
+                /*"040","041","042","043","044",
                 "050","051","052","053","054",
                 "060","061","062","063","064",
                 "070","071","072","073","074",
                 "080","081","082","083","084",
                 "090","091","092","093","094",
-                "100","101","102","103","104"*/,
+                "100","101","102","103","104"*,*/
                 "000","004","010","014","020",
                 "024","030","034","040","044",
-                /*"050","054","060","064","070",
-                "074","080","084","090","094",
+                "050","054","060","064","070",
+                /*"074","080","084","090","094",
                 "100","104",*/"000","004"};
 
 
@@ -461,13 +724,19 @@ public class ControlBD {
         db.execSQL("DELETE FROM usuario");
         db.execSQL("DELETE FROM opcioncrud");
         db.execSQL("DELETE FROM accesousuario");
+        db.execSQL("DELETE FROM propuesta_perfil");
+        db.execSQL("DELETE FROM tipo_proyecto");
+
 
         Docente docente = new Docente();
         for(int i=0;i<2;i++){
             docente.setCodigoDocente(VDcodigo[i]);
             docente.setNombreDocente(VDnombre[i]);
             docente.setApellidoDocente(VDapellido[i]);
-            docente.setEscuela(VDescuela[i]);
+            docente.setTipoContrato(VDtipoContrato[i]);
+            docente.setCorreo(VDcorreo[i]);
+            docente.setTelefono(VDtelefono[i]);
+
             insertar(docente);
         }
 
@@ -506,6 +775,25 @@ public class ControlBD {
             insertar(acceso);
         }
 
+        PropuestaPerfil propuestaPerfil = new PropuestaPerfil();
+        for (int i = 0; i < 4; i++) {
+            propuestaPerfil.setNumero_tema(VPnumero_tema[i]);
+            propuestaPerfil.setCodigo_grupo(VPcodigo_grupo[i]);
+            propuestaPerfil.setTema_perfil(VPtema_perfil[i]);
+            propuestaPerfil.setEstado(VPestado[i]);
+            propuestaPerfil.setAno_propuesta(VPano_propuesta[i]);
+            insertar(propuestaPerfil);
+        }
+
+        TipoProyecto tipoProyecto = new TipoProyecto();
+        for (int i = 0; i < 4; i++) {
+            tipoProyecto.setNumero_tema(VTnumero_tema[i]);
+            tipoProyecto.setNombre_tipo(VTnombre_tipo[i]);
+            tipoProyecto.setTipo_defensa(VTtipo_defensa[i]);
+            tipoProyecto.setTipo_realizacion(VTtipo_realizacion[i]);
+            insertar(tipoProyecto);
+        }
+
 
 
 
@@ -515,35 +803,5 @@ public class ControlBD {
 
 
 
-    public Cursor obtenerMenuUsuario(String id){
-        String sql = "select oc.desopcion, oc.numcrud from usuario u "+
-                "join accesousuario au on u.idusuario = au.idusuario and u.idusuario='"+id+"'\n" +
-                "join opcioncrud oc on au.idopcion = oc.idopcion and oc.numcrud='0'";
-        abrir();
-        return db.rawQuery(sql, null);
-    }
 
-    public Cursor obtenerSubMenu(String id, String idOpcion){
-        String sql = "select oc.desopcion, oc.numcrud from usuario u "+
-                "join accesousuario au on u.idusuario = au.idusuario and u.idusuario='"+id+"'\n" +
-                "join opcioncrud oc on au.idopcion = oc.idopcion and oc.numcrud!='0' and au.idopcion like '"+idOpcion+"'";
-        abrir();
-        return db.rawQuery(sql, null);
-    }
-
-    public Usuario consultarId(String nomusuario) {
-        String[] id = {nomusuario};
-
-        Cursor cursor = db.query("usuario", camposUsuario, "nomusuario = ?", id, null, null, null);
-        if(cursor.moveToFirst()){
-            Usuario detalledocente = new Usuario();
-            detalledocente.setIdusuario(cursor.getString(0));
-            detalledocente.setNomusuario(cursor.getString(1));
-            detalledocente.setClave(cursor.getString(2));
-
-            return detalledocente;
-        }else{
-            return null;
-        }
-    }
 }

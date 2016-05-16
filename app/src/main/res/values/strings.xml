@@ -3,20 +3,8 @@
     <string name="action_settings" />
     <string name="title_activity_login">Sign in</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+
     <string name="app_titulo_login">Proyecto de Graduación</string>
-    <string name="Codigo">Codigo</string>
     <string name="Eliminar">Eliminar</string>
     <string name="Carnet">Carnet</string>
     <string name="CodigoGrupo">Codigo Grupo</string>
@@ -33,4 +21,44 @@
     <string name="Contraseña">Contraseña</string>
     <string name="NuevoUsuario">Nuevo Usuario</string>
     <string name="Hola">hola</string>
+
+    <string name="title_activity_propuesta_perfil_menu_activity">PropuestaPerfilActivity</string>
+    <string name="title_activity_tipo_proyecto_menu">TipoProyectoActivity</string>
+
+    <string name="title_activity_propuesta_perfil_insertar">PropuestaPerfilInsertarActivity</string>
+    <string name="title_activity_propuesta_perfil_eliminar">PropuestaPerfilEliminarActivity</string>
+    <string name="title_activity_propuesta_perfil_actualizar">PropuestaPerfilActualizarActivity</string>
+    <string name="title_activity_propuesta_perfil_consultar">PropuestaPerfilConsultarActivity</string>
+
+    <string name="title_activity_tipo_proyecto_insertar">TipoProyectoInsertarActivity</string>
+    <string name="title_activity_tipo_proyecto_eliminar">TipoProyectoEliminarActivity</string>
+    <string name="title_activity_tipo_proyecto_actualizar">TipoProyectoActualizarActivity</string>
+    <string name="title_activity_tipo_proyecto_consultar">TipoProyectoConsultarActivity</string>
+
+    <string name="propuesta_perfil_menu">Función a Ejecutar Propuesta Perfil</string>
+    <string name="tipo_proyecto_menu">Función a Ejecutar Tipo Proyecto</string>
+
+    <string name="insertar_registro">Insertar Registro</string>
+    <string name="eliminar_registro">Eliminar Registro</string>
+    <string name="consultar_registro">Consultar Registro</string>
+    <string name="actualizar_registro">Actualizar Registro</string>
+
+    <string name="numero_tema">Numero de tema</string>
+    <string name="codigo_grupo">Codigo de grupo</string>
+    <string name="tema_perfil">Tema perfil</string>
+    <string name="estado">Estado</string>
+    <string name="ano_propuesta">Año de propuesta</string>
+
+    <string name="nombre_tipo">Tipo de proyecto</string>
+    <string name="tipo_defensa">Tipo de defensa</string>
+    <string name="tipo_realizacion">Tipo de realizacion</string>
+
+    <string name="limpiar">Limpiar</string>
+    <string name="insertar">Insertar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="consultar">Consultar</string>
+    <string name="opciones">Opciones:</string>
+
+
 </resources>

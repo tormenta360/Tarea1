@@ -8,13 +8,18 @@ public class Docente extends AppCompatActivity {
     private String codigoDocente;
     private String nombreDocente;
     private String apellidoDocente;
-    private String escuela;
+    private String tipoContrato;
+    private String Correo;
+    private String Telefono;
+
+
+    //Contrato, ley de salario, horas clase
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_docente);
+        //setContentView(R.layout.activity_docente);
     }
 
 
@@ -42,11 +47,27 @@ public class Docente extends AppCompatActivity {
         this.apellidoDocente = apellidoDocente;
     }
 
-    public String getEscuela() {
-        return escuela;
+    public String getTipoContrato() {
+        return tipoContrato;
     }
 
-    public void setEscuela(String escuela) {
-        this.escuela = escuela;
+    public void setTipoContrato(String tipoContrato) {
+        this.tipoContrato = tipoContrato;
+    }
+
+    public String getCorreo() {
+        return Correo;
+    }
+
+    public void setCorreo(String correo) {
+        Correo = correo;
+    }
+
+    public String getTelefono() {
+        return Telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        Telefono = telefono;
     }
 }

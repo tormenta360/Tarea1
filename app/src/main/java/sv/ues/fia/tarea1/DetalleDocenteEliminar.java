@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class DetalleDocenteEliminar extends Activity {
 
-    EditText editCodigo;
+    EditText editCodigo, editCodigoGrupo;
     ControlBD controlhelper;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -17,19 +17,30 @@ public class DetalleDocenteEliminar extends Activity {
         setContentView(R.layout.activity_detalle_docente_eliminar);
         controlhelper=new ControlBD (this);
         editCodigo=(EditText)findViewById(R.id.editCodigo);
+        editCodigoGrupo = (EditText) findViewById(R.id.editCodigoGrupo);
     }
     public void eliminarDetalleDocente(View v){
-        String regEliminadas;
-        DetalleDocente detalleDocente=new DetalleDocente();
-        detalleDocente.setCodigoDocente(editCodigo.getText().toString());
-        controlhelper.abrir();
-        regEliminadas=controlhelper.eliminar(detalleDocente);
-        controlhelper.cerrar();
-        if(regEliminadas.equals(true)){
-            Toast.makeText(this, "Error al eliminar, Falta registro en tabla docente o grupo", Toast.LENGTH_LONG).show();
 
-        }else{
-            Toast.makeText(this, regEliminadas, Toast.LENGTH_LONG).show();
+        try {
+
+
+            String regEliminadas;
+            DetalleDocente detalleDocente=new DetalleDocente();
+            detalleDocente.setCodigoDocente(editCodigo.getText().toString());
+            detalleDocente.setCodigoDocente(editCodigoGrupo.getText().toString());
+            controlhelper.abrir();
+            regEliminadas=controlhelper.eliminar(detalleDocente);
+            controlhelper.cerrar();
+            if(regEliminadas.equals(true)){
+                Toast.makeText(this, "Error al eliminar, Falta registro en tabla docente o grupo", Toast.LENGTH_LONG).show();
+
+            }else{
+                Toast.makeText(this, regEliminadas, Toast.LENGTH_LONG).show();
+            }
+
+    }
+        catch (Exception e) {
+            Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT).show();
         }
     }
 }

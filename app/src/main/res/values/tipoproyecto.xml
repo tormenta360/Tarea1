@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipoproyecto">
+        <item>Desarrollo de Software</item>
+        <item>Sistema Informatico</item>
+        <item>Investigacion</item>
+    </string-array>
+</resources>

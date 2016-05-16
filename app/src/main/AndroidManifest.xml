@@ -34,6 +34,16 @@
         <activity android:name=".DocenteInsertar" />
         <activity android:name=".DocenteMenu" />
         <activity android:name=".PTGActivity1" />
+        <activity android:name=".PropuestaPerfilMenuActivity" />
+        <activity android:name=".TipoProyectoMenuActivity" />
+        <activity android:name=".PropuestaPerfilInsertarActivity" />
+        <activity android:name=".PropuestaPerfilEliminarActivity" />
+        <activity android:name=".PropuestaPerfilActualizarActivity" />
+        <activity android:name=".PropuestaPerfilConsultarActivity" />
+        <activity android:name=".TipoProyectoInsertarActivity" />
+        <activity android:name=".TipoProyectoEliminarActivity" />
+        <activity android:name=".TipoProyectoActualizarActivity" />
+        <activity android:name=".TipoProyectoConsultarActivity"></activity>
     </application>
 
 </manifest>

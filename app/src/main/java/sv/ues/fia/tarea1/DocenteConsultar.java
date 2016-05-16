@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class DocenteConsultar extends Activity {
@@ -13,7 +14,7 @@ public class DocenteConsultar extends Activity {
     EditText editCodigo;
     EditText editNombre;
     EditText editApellido;
-    EditText editEscuela;
+    EditText editTelefono,editCorreo,editTipoContrato;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,10 @@ public class DocenteConsultar extends Activity {
         editCodigo = (EditText) findViewById(R.id.editCodigo);
         editNombre = (EditText) findViewById(R.id.editNombreDocente);
         editApellido = (EditText) findViewById(R.id.editApellido);
-        editEscuela = (EditText) findViewById(R.id.editEscuela);
+        editTipoContrato= (EditText) findViewById(R.id.editTipoContrato);
+        editCorreo = (EditText) findViewById(R.id.editCorreo);
+        editTelefono = (EditText) findViewById(R.id.editTelefono);
+
     }
     public void consultarDocente(View v) {
 
@@ -36,7 +40,10 @@ public class DocenteConsultar extends Activity {
         else{
             editNombre.setText(docente.getNombreDocente());
             editApellido.setText(docente.getApellidoDocente());
-            editEscuela.setText(docente.getEscuela());
+            editTipoContrato.setText(docente.getTipoContrato());
+            editCorreo.setText(docente.getCorreo());
+            editTelefono.setText(docente.getTelefono());
+
         }
 
 
@@ -45,6 +52,9 @@ public class DocenteConsultar extends Activity {
         editCodigo.setText("");
         editNombre.setText("");
         editApellido.setText("");
-        editEscuela.setText("");
+        editTipoContrato.setText("");
+        editCorreo.setText("");
+        editTelefono.setText("");
+        
     }
 }

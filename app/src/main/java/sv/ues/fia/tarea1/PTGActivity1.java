@@ -23,8 +23,12 @@ public class PTGActivity1 extends ListActivity {
 
 
 
-    String[] activities = {"DocenteMenu","DetalleDocenteMenu"};
-    String[] OpcionCrud = {"Menu Docente","Menu Detalle Docente"};
+    // String[] menu={"Tabla Propuesta Perfil","Tabla Tipo Proyecto","LLenar Base de Datos"};
+    //String[] activities={"PropuestaPerfilMenuActivity","TipoProyectoMenuActivity"};
+
+    String[] activities = {"DocenteMenu","DetalleDocenteMenu","PropuestaPerfilMenuActivity","TipoProyectoMenuActivity"};
+    String[] OpcionCrud = {"Menu Docente","Menu Detalle Docente","Tabla Propuesta Perfil","Tabla Tipo Proyecto","LLenar Base de Datos"};
+
 
     private ArrayList<String> resultados = new ArrayList<>();
     ControlBD helper;
@@ -39,7 +43,6 @@ public class PTGActivity1 extends ListActivity {
         Bundle bundle = getIntent().getExtras();
         username = bundle.getString("nousuario");
         idUser = bundle.getString("idusuario");
-        //Toast.makeText(PTGActivity1.this, idUser, Toast.LENGTH_SHORT).show();
         try {
             helper = new ControlBD(this);
             Cursor c = helper.obtenerMenuUsuario(idUser);
@@ -82,7 +85,6 @@ public class PTGActivity1 extends ListActivity {
                     clase=Class.forName("sv.ues.fia.tarea1."+nombreValue);
             Intent inte = new Intent(this,clase);
             inte.putExtra("idusuario",idUser);
-            Toast.makeText(PTGActivity1.this, nombreValue, Toast.LENGTH_SHORT).show();
             this.startActivity(inte);
         }catch (ClassNotFoundException e){
             e.printStackTrace();

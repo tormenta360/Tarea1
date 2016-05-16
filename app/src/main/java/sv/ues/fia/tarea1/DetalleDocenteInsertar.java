@@ -16,16 +16,15 @@ public class DetalleDocenteInsertar extends Activity {
     ControlBD helper;
     EditText editCodigo;
     EditText editCodigoGrupo;
-    Spinner spinnerl;
+    Spinner spinnerl, spinnerCodigos;
     EditText editNombre;
 
-    //final String[] datos = new String[]{"Jurado","Docente"};
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_docente_insertar);
         helper = new ControlBD(this);
-
+        spinnerCodigos = (Spinner) findViewById(R.id.spinnerCodigos);
         spinnerl = (Spinner) findViewById(R.id.spinner);
         String []opciones={"Jurado","Docente"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
@@ -37,6 +36,9 @@ public class DetalleDocenteInsertar extends Activity {
         spinnerl.setAdapter(adapter);
 
     }
+
+
+
     public void insertarDetalleDocente(View v) {
         String regInsertados;
         String codigo=editCodigo.getText().toString();

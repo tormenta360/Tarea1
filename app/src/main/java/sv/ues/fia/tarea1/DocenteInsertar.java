@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class DocenteInsertar extends Activity {
@@ -13,31 +15,58 @@ public class DocenteInsertar extends Activity {
     EditText editCodigo;
     EditText editNombre;
     EditText editApellido;
-    EditText editEscuela;
+    Spinner spinnerTipoContrato;
+    EditText editCorreo;
+    EditText editTelefono;
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_docente_insertar);
+
+
         helper = new ControlBD(this);
+
+
+
+
         editCodigo = (EditText) findViewById(R.id.etCodigo);
         editNombre = (EditText) findViewById(R.id.etNombre);
         editApellido = (EditText) findViewById(R.id.etApellido);
-        editEscuela = (EditText) findViewById(R.id.etEscuela);
+        spinnerTipoContrato = (Spinner) findViewById(R.id.spinnerTipoContrato);
+
+        String []opciones={"Ley de Salario", "Contrato", "Horas Clase"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
+
+
+        editCorreo = (EditText) findViewById(R.id.editCorreo);
+        editTelefono = (EditText) findViewById(R.id.editTelefono);
+        spinnerTipoContrato.setAdapter(adapter);
+
     }
     public void insertarDocente(View v) {
         String codigo=editCodigo.getText().toString();
         String nombre=editNombre.getText().toString();
         String apellido=editApellido.getText().toString();
-        String escuela=editEscuela.getText().toString();
+        String tipoContrato = spinnerTipoContrato.getSelectedItem().toString();
+        String correo = editCorreo.getText().toString();
+        String telefono = editTelefono.getText().toString();
+
+
         String regInsertados;
 
-        if(codigo.equals("") || codigo.equals("") || nombre.equals("")|| apellido.equals("")|| escuela.equals("")){
+        if(codigo.equals("") || codigo.equals("") || nombre.equals("")|| apellido.equals("")|| correo.equals("")|| telefono.equals("")){
             Toast.makeText(this, "Ingrese los datos en todos los campos", Toast.LENGTH_SHORT);
         }else {
             Docente docente = new Docente();
             docente.setCodigoDocente(codigo);
             docente.setNombreDocente(nombre);
             docente.setApellidoDocente(apellido);
-            docente.setEscuela(escuela);
+            docente.setTipoContrato(tipoContrato);
+            docente.setCorreo(correo);
+            docente.setTelefono(telefono);
+
+
             helper.abrir();
             regInsertados = helper.insertar(docente);
             helper.cerrar();
@@ -48,6 +77,10 @@ public class DocenteInsertar extends Activity {
         editCodigo.setText("");
         editNombre.setText("");
         editApellido.setText("");
-        editEscuela.setText("");
+        spinnerTipoContrato.setSelection(0);
+        editCorreo.setText("");
+        editTelefono.setText("");
+
+
     }
 }

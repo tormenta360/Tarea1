@@ -32,9 +32,27 @@
         android:layout_height="wrap_content"
         android:text="@string/Eliminar"
         android:id="@+id/btnEliminar"
+        android:onClick="eliminarDetalleDocente"
+        android:layout_below="@+id/editCodigoGrupo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/CodigoGrupo"
+        android:id="@+id/textView26"
         android:layout_below="@+id/editCodigo"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editCodigoGrupo"
         android:layout_alignParentStart="true"
-        android:onClick="eliminarDetalleDocente" />
+        android:layout_below="@+id/textView26"
+        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>

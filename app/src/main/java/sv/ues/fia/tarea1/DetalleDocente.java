@@ -13,7 +13,7 @@ public class DetalleDocente extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle_docente);
+        //setContentView(R.layout.activity_detalle_docente);
     }
 
     public String getCodigoDocente() {

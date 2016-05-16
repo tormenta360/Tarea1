@@ -26,8 +26,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/etCodigo"
         android:layout_alignTop="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
+        android:layout_toEndOf="@+id/textView"
+        android:layout_alignLeft="@+id/etNombre"
+        android:layout_alignStart="@+id/etNombre" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,8 +45,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/etNombre"
         android:layout_alignTop="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_alignLeft="@+id/etApellido"
+        android:layout_alignStart="@+id/etApellido" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,50 +64,91 @@
         android:layout_height="wrap_content"
         android:id="@+id/etApellido"
         android:layout_below="@+id/etNombre"
-        android:layout_alignLeft="@+id/etNombre"
-        android:layout_alignStart="@+id/etNombre" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/Escuela"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/etApellido"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etEscuela"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_alignLeft="@+id/etApellido"
-        android:layout_alignStart="@+id/etApellido" />
+        android:layout_toRightOf="@+id/textView32"
+        android:layout_toEndOf="@+id/textView32" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Insertar"
         android:id="@+id/btnInsertar"
-        android:layout_marginRight="34dp"
-        android:layout_marginEnd="34dp"
-        android:layout_below="@+id/etEscuela"
-        android:layout_toLeftOf="@+id/btnLimpiar"
-        android:layout_toStartOf="@+id/btnLimpiar"
-        android:layout_marginTop="24dp"
-        android:onClick="insertarDocente" />
+        android:onClick="insertarDocente"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView31"
+        android:layout_toEndOf="@+id/textView31"
+        android:layout_marginBottom="25dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Limpiar"
         android:id="@+id/btnLimpiar"
-        android:layout_alignBottom="@+id/btnInsertar"
-        android:layout_alignRight="@+id/etEscuela"
-        android:layout_alignEnd="@+id/etEscuela"
-        android:layout_marginRight="57dp"
-        android:layout_marginEnd="57dp"
-        android:onClick="limpiarTexto" />
+        android:onClick="limpiarTexto"
+        android:layout_marginLeft="37dp"
+        android:layout_marginStart="37dp"
+        android:layout_alignTop="@+id/btnInsertar"
+        android:layout_toRightOf="@+id/btnInsertar"
+        android:layout_toEndOf="@+id/btnInsertar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tipo de Contrato"
+        android:id="@+id/textView30"
+        android:layout_below="@+id/editTelefono"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerTipoContrato"
+        android:layout_alignTop="@+id/textView30"
+        android:layout_alignLeft="@+id/btnLimpiar"
+        android:layout_alignStart="@+id/btnLimpiar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Correo"
+        android:id="@+id/textView31"
+        android:layout_alignTop="@+id/editCorreo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editCorreo"
+        android:layout_below="@+id/etApellido"
+        android:layout_toRightOf="@+id/textView32"
+        android:layout_alignRight="@+id/etApellido"
+        android:layout_alignEnd="@+id/etApellido" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Telefono"
+        android:id="@+id/textView32"
+        android:layout_below="@+id/editCorreo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/editTelefono"
+        android:layout_below="@+id/editCorreo"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/textView32"
+        android:layout_toEndOf="@+id/textView32" />
 
 </RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dip"
+    android:stretchColumns="1" >
+
+    <TableRow>
+        <TextView android:text="@string/numero_tema" />
+        <EditText
+            android:id="@+id/editNumero_tema"
+            android:inputType="number" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="@string/nombre_tipo" />
+        <Spinner
+            android:id="@+id/spiNombre_tipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="@string/tipo_defensa" />
+        <EditText
+            android:id="@+id/editTipo_defensa"
+            android:inputType="text"
+            android:maxLength="30" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="@string/tipo_realizacion" />
+        <EditText
+            android:id="@+id/editTipo_realizacion"
+            android:inputType="text"
+            android:maxLength="30"/>
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:onClick="actualizarTipo_Proyecto"
+            android:text="@string/actualizar" />
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:onClick="limpiarTexto"
+            android:text="@string/limpiar" />
+    </TableRow>
+</TableLayout>

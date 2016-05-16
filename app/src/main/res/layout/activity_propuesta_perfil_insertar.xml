@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dip"
+    android:stretchColumns="1" >
+
+    <TableRow>
+        <TextView android:text="@string/numero_tema"/>
+        <EditText
+            android:id="@+id/editNumero_tema"
+            android:inputType="number" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="@string/codigo_grupo" />
+        <EditText
+            android:id="@+id/editCodigo_grupo"
+            android:inputType="number" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="@string/tema_perfil" />
+        <EditText
+            android:id="@+id/editTema_perfil"
+            android:inputType="text"
+            android:maxLength="30" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="@string/estado" />
+        <Spinner
+            android:id="@+id/spiEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="@string/ano_propuesta" />
+        <EditText
+            android:id="@+id/editAno_propuesta"
+            android:inputType="number"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="@string/opciones" />
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:onClick="insertarPropuesta_Perfil"
+            android:text="@string/insertar" />
+        <Button
+            android:onClick="limpiarTexto"
+            android:text="@string/limpiar" />
+    </TableRow>
+
+
+</TableLayout>

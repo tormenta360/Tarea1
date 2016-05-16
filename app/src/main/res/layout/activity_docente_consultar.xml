@@ -64,9 +64,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editNombreDocente"
-        android:layout_below="@+id/textView6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/BtnConsultar"
+        android:layout_toEndOf="@+id/BtnConsultar"
+        android:layout_toRightOf="@+id/BtnConsultar" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,27 +82,74 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editApellido"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView7"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignTop="@+id/textView7"
+        android:layout_toEndOf="@+id/BtnConsultar"
+        android:layout_toRightOf="@+id/BtnConsultar" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/Escuela"
-        android:id="@+id/textView8"
+        android:text="Tipo de Contrato"
+        android:id="@+id/textView33"
         android:layout_below="@+id/editApellido"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/editCorreo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Correo"
+        android:id="@+id/textView34"
+        android:layout_below="@+id/textView33"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editEscuela"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView8"
-        android:layout_alignParentLeft="true" />
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editCorreo"
+        android:layout_below="@+id/editTipoContrato"
+        android:layout_alignRight="@+id/editTipoContrato"
+        android:layout_alignEnd="@+id/editTipoContrato"
+        android:layout_alignLeft="@+id/editApellido"
+        android:layout_alignStart="@+id/editApellido" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Telefono"
+        android:id="@+id/textView35"
+        android:layout_below="@+id/editCorreo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/editTelefono"
+        android:layout_below="@+id/editCorreo"
+        android:layout_alignRight="@+id/editCorreo"
+        android:layout_alignEnd="@+id/editCorreo"
+        android:layout_alignLeft="@+id/editCorreo"
+        android:layout_alignStart="@+id/editCorreo" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTipoContrato"
+        android:layout_below="@+id/editApellido"
+        android:layout_toRightOf="@+id/textView33"
+        android:layout_toEndOf="@+id/textView33" />
 
 </RelativeLayout>
 

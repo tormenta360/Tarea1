@@ -29,6 +29,13 @@ public class PTGActivity extends AppCompatActivity {
 
     public void onButtonClick(View v)
     {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Autenticando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+
         if(v.getId() == R.id.Blogin)
         {
             EditText a = (EditText)findViewById(R.id.TFusername);
@@ -38,18 +45,6 @@ public class PTGActivity extends AppCompatActivity {
 
             Usuario u;
             String password = helper.searchPass(str);
-
-
-//            u = helper.verificarCredenciales(u);
-
-            //u.setNomusuario(str);
-            //u.setClave(pass);
-
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Autenticando...");
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.show();
 
             if ( str.equals("") || pass.equals("")){
                 Toast temp = Toast.makeText(this, "Ingrese los campos mostrados!", Toast.LENGTH_SHORT);
@@ -64,7 +59,7 @@ public class PTGActivity extends AppCompatActivity {
                     u = helper.consultarId(str);
                     i.putExtra("nomusuario", str);
                     i.putExtra("idusuario", u.getIdusuario());
-                    Toast.makeText(PTGActivity.this, u.getIdusuario(), Toast.LENGTH_SHORT).show();
+
                     startActivity(i);
                 }
                 else
