@@ -1221,7 +1221,23 @@ public class ControlBD {
     }
 
 
-    public String llenarBD(){
+    public void llenarBD(){
+
+        abrir();
+        db.execSQL("DELETE FROM docente");
+        db.execSQL("DELETE FROM detalledocente");
+        db.execSQL("DELETE FROM usuario");
+        db.execSQL("DELETE FROM opcioncrud");
+        db.execSQL("DELETE FROM accesousuario");
+        db.execSQL("DELETE FROM propuesta_perfil");
+        db.execSQL("DELETE FROM tipo_proyecto");
+        db.execSQL("DELETE FROM evaluacion");
+        db.execSQL("DELETE FROM detalle_evaluacion");
+        db.execSQL("DELETE FROM local_evaluacion");
+        db.execSQL("DELETE FROM estudiante");
+        db.execSQL("DELETE FROM grupo");
+        db.execSQL("DELETE FROM estudiante_grupo");
+
 
         final String[] VDcodigo = {"LV10022","SC12054"};
         final String[] VDnombre = {"Walter","Cristian"};
@@ -1231,6 +1247,28 @@ public class ControlBD {
         final String[] VDtipoContrato={"Ley de Salario","Contrato"};
         final String[] VDcorreo={"lv10022@ues.edu.sv","sc12054@ues.edu.sv"};
         final String[] VDtelefono={"22250001","22250002"};
+
+        Docente docente = new Docente();
+        for(int i=0;i<2;i++){
+            docente.setCodigoDocente(VDcodigo[i]);
+            docente.setNombreDocente(VDnombre[i]);
+            docente.setApellidoDocente(VDapellido[i]);
+            docente.setTipoContrato(VDtipoContrato[i]);
+            docente.setCorreo(VDcorreo[i]);
+            docente.setTelefono(VDtelefono[i]);
+
+            insertar(docente);
+        }
+
+        DetalleDocente detalleDocente = new DetalleDocente();
+        for(int i=0;i<2; i++) {
+            detalleDocente.setCodigoDocente(VDcodigo[i]);
+            detalleDocente.setCodigoGrupo(VDcodigogrupo[i]);
+            detalleDocente.setTipoRol(VDtiporol[i]);
+            detalleDocente.setNombreDocente(VDnombre[i]);
+
+            insertar(detalleDocente);
+        }
 
         final int[] VPnumero_tema = {1, 2, 3, 4};
         final int[] VPcodigo_grupo = {1, 2, 3, 4};
@@ -1284,21 +1322,21 @@ public class ControlBD {
                 "070","071","072","073","074",
                 "080","081","082","083","084",
                 "090","091","092","093","094",
-                "100"/*,"101","102","103","104"*/};
+                /*"100","101","102","103","104"*/};
 
         final String[] VOdesOpcion = {"Menu Docente","Ingresar Docente","Eliminar Docente","Actualizar Docente","Consultar Docente",
-                "Menu Detalle Docente","Ingresar Detalle Docente","Eliminar Detalle Docente","Actualizar Detalle Docente","Consultar Detalle Docente",
-                "Tabla Propuesta Perfil","Insertar Registro","Eliminar Registro","Consultar Registro","Actualizar Registro",
-                "Tabla Tipo Proyecto","Insertar Registro","Eliminar Registro","Consultar Registro","Actualizar Registro",
-                "Tabla Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
-                "Tabla Detalle Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
-                "Tabla Local Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
+    /*01*/     "Menu Detalle Docente","Ingresar Detalle Docente","Eliminar Detalle Docente","Actualizar Detalle Docente","Consultar Detalle Docente",
+    /*02*/     "Menu Propuesta Perfil","Insertar Registro","Eliminar Registro","Consultar Registro","Actualizar Registro",
+    /*03*/     "Menu Tipo Proyecto","Insertar Registro","Eliminar Registro","Consultar Registro","Actualizar Registro",
+    /*04*/     "Menu Detalle Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
+    /*05*/     "Menu Local Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro",
+    /*06*/     "Menu Estudiante","Insertar Estudiante", "Eliminar Estudiante", "Consultar Estudiante","Actualizar Estudiante",
+    /*07*/     "Menu Grupo","Insertar Grupo", "Eliminar Grupo", "Consultar Grupo","Actualizar Grupo",
+     /*08*/    "Menu Estudiante-Grupo","Ingresar a un grupo", "Salir de grupo", "Consultar grupos","Cambiar de grupo",
+     /*09*/    "Menu Evaluación","Insertar Registro", "Eliminar Registro", "Consultar Registro", "Actualizar Registro"};
 
-                "Tabla Estudiante","Insertar Estudiante", "Eliminar Estudiante", "Consultar Estudiante","Actualizar Estudiante",
-                "Tabla Grupo","Insertar Grupo", "Eliminar Grupo", "Consultar Grupo","Actualizar Grupo",
-                "Estudiante-Grupo","Ingresar a un grupo", "Salir de grupo", "Consultar grupos","Cambiar de grupo",
 
-                "LLenar Base de Datos"/*,"Ingresar Tipo","Eliminar Tipo","Actualizar Tipo","Consultar Tipo"*/};
+
 
         final int[] VOnumCrud = {0,1,2,3,4,
                 0,1,2,3,4,
@@ -1310,7 +1348,7 @@ public class ControlBD {
                 0,1,2,3,4,
                 0,1,2,3,4,
                 0,1,2,3,4,
-                0/*,1,2,3,4*/};
+                /*0,1,2,3,4*/};
 
         final String[] VAidUsuario = {"00","00","00","00","00",
                 "00","00","00","00","00",
@@ -1322,7 +1360,7 @@ public class ControlBD {
                 "00","00","00","00","00",
                 "00","00","00","00","00",
                 "00","00","00","00","00",
-                "00",/*"00","00","00","00",*/
+                /*"00","00","00","00","00",*/
                 "01","01","01","01","01",
                 "01","01","01","01","01",
                 "01","01","01","01","01",
@@ -1338,7 +1376,7 @@ public class ControlBD {
                 "070","071","072","073","074",
                 "080","081","082","083","084",
                 "090","091","092","093","094",
-                "100",/*"101","102","103","104"*,*/
+                /*"100","101","102","103","104"*,*/
                 "000","004","010","014","020",
                 "024","030","034","040","044",
                 "050","054","060","064","070",
@@ -1347,42 +1385,9 @@ public class ControlBD {
 
 
 
-        abrir();
-        db.execSQL("DELETE FROM docente");
-        db.execSQL("DELETE FROM detalledocente");
-        db.execSQL("DELETE FROM usuario");
-        db.execSQL("DELETE FROM opcioncrud");
-        db.execSQL("DELETE FROM accesousuario");
-        db.execSQL("DELETE FROM propuesta_perfil");
-        db.execSQL("DELETE FROM tipo_proyecto");
-        db.execSQL("DELETE FROM evaluacion");
-        db.execSQL("DELETE FROM detalle_evaluacion");
-        db.execSQL("DELETE FROM local_evaluacion");
-        db.execSQL("DELETE FROM estudiante");
-        db.execSQL("DELETE FROM grupo");
-        db.execSQL("DELETE FROM estudiante_grupo");
 
-        Docente docente = new Docente();
-        for(int i=0;i<2;i++){
-            docente.setCodigoDocente(VDcodigo[i]);
-            docente.setNombreDocente(VDnombre[i]);
-            docente.setApellidoDocente(VDapellido[i]);
-            docente.setTipoContrato(VDtipoContrato[i]);
-            docente.setCorreo(VDcorreo[i]);
-            docente.setTelefono(VDtelefono[i]);
 
-            insertar(docente);
-        }
 
-        DetalleDocente detalleDocente = new DetalleDocente();
-        for(int i=0;i<2; i++) {
-            detalleDocente.setCodigoDocente(VDcodigo[i]);
-            detalleDocente.setCodigoGrupo(VDcodigogrupo[i]);
-            detalleDocente.setTipoRol(VDtiporol[i]);
-            detalleDocente.setNombreDocente(VDnombre[i]);
-
-            insertar(detalleDocente);
-        }
         Usuario usuario = new Usuario();
         for(int i=0;i<3; i++) {
             usuario.setIdusuario(VUidUsuario[i]);
@@ -1484,7 +1489,7 @@ public class ControlBD {
 
 
         cerrar();
-        return "Tablas LLenadas con exito";
+        //return "Tablas LLenadas con exito";
     }
 
 

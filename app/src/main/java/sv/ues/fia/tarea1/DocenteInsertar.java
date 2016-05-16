@@ -35,13 +35,13 @@ public class DocenteInsertar extends Activity {
         editApellido = (EditText) findViewById(R.id.etApellido);
         spinnerTipoContrato = (Spinner) findViewById(R.id.spinnerTipoContrato);
 
-        String []opciones={"Ley de Salario", "Contrato", "Horas Clase"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
+        ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(this,R.array.tipoContrato,android.R.layout.simple_spinner_item);
+;
 
 
         editCorreo = (EditText) findViewById(R.id.editCorreo);
         editTelefono = (EditText) findViewById(R.id.editTelefono);
-        spinnerTipoContrato.setAdapter(adapter);
+        spinnerTipoContrato.setAdapter(adaptador);
 
     }
     public void insertarDocente(View v) {

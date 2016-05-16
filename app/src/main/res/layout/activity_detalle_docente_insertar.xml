@@ -34,9 +34,8 @@
         android:text="@string/Nombre"
         android:id="@+id/textView15"
         android:layout_below="@+id/editCodigo"
-        android:layout_alignRight="@+id/textView16"
-        android:layout_alignEnd="@+id/textView16"
-        android:layout_marginTop="57dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -69,10 +68,9 @@
         android:text="@string/Insertar"
         android:id="@+id/btnInsertar"
         android:onClick="insertarDetalleDocente"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/spinner"
         android:layout_alignRight="@+id/textView24"
-        android:layout_alignEnd="@+id/textView24"
-        android:layout_marginBottom="62dp" />
+        android:layout_alignEnd="@+id/textView24" />
 
     <Button
         android:layout_width="wrap_content"
@@ -105,15 +103,6 @@
         android:layout_below="@+id/textView24"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerCodigos"
-        android:layout_below="@+id/editCodigo"
-        android:layout_toStartOf="@+id/btnLimpiar"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
